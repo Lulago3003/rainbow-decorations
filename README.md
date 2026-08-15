@@ -3,79 +3,127 @@
 Página web comercial para **Rainbow Decorations** (@rainbowdecorations01), decoración de
 fiestas en Arraiján, Panamá Oeste.
 
-Es un sitio estático: solo HTML, CSS y JavaScript. No necesita servidor, base de datos ni
-instalar nada. Se publica gratis en GitHub Pages.
+Es un sitio estático: solo HTML, CSS y JavaScript. No necesita servidor ni base de datos.
+Se publica gratis en GitHub Pages.
+
+**En vivo:** https://lulago3003.github.io/rainbow-decorations/
 
 ```
-index.html            → toda la página
+index.html            → la página principal
+privacidad.html       → política de privacidad y cookies
+terminos.html         → términos y condiciones
+contenido.json        → el contenido que se edita desde el panel
 assets/css/style.css  → estilos
-assets/js/app.js      → interacciones (galería, formulario, animaciones)
+assets/js/app.js      → interacciones de la página
+assets/js/admin.js    → panel de administración
 assets/gallery/       → las fotos
-assets/img/           → favicon
 ```
 
 ---
 
-## Cómo cambiar cosas
+## 1. El panel para la dueña
+
+La dueña puede editar la página ella misma, sin tocar código.
+
+**Cómo entrar:** agrega `#admin` al final de la dirección:
+
+```
+https://lulago3003.github.io/rainbow-decorations/#admin
+```
+
+**Clave por defecto:** `rainbow2026`
+
+### Qué puede editar
+
+| Sección | Qué controla |
+|---|---|
+| Promoción de arriba | La barra de colores del tope: encenderla/apagarla, texto, etiqueta, botón y el mensaje que se escribe en WhatsApp |
+| Publicaciones de Instagram | Pega el enlace de una publicación y aparece en la página. Se pueden agregar, quitar y reordenar |
+| Paquetes y precios | Nombre, precio, para quién es, qué incluye, y cuál sale marcado como "Más pedido" |
+| Contacto y datos | WhatsApp, Instagram, horario, zona de cobertura y formas de pago |
+
+Los cambios **se ven al instante** en la página mientras edita (queda guardado como borrador
+en su navegador). Para que los vea todo el mundo hay que darle a **Publicar en la web**.
+
+### Publicar: las dos formas
+
+**Opción A — Publicar ella misma (recomendado).** Necesita un token de GitHub, que se crea
+una sola vez:
+
+1. Entrar a <https://github.com/settings/personal-access-tokens>
+2. *Generate new token* → **Fine-grained token**
+3. En *Repository access*, escoger **Only select repositories** → `rainbow-decorations`
+4. En *Permissions* → *Repository permissions* → **Contents: Read and write**
+5. Copiar el token y pegarlo en el panel, en el campo "Token de GitHub"
+
+A partir de ahí, el botón **Publicar en la web** sube los cambios y en un minuto están en
+línea. El token queda guardado en su navegador; hay un botón para borrarlo.
+
+**Opción B — Sin token.** El botón **Descargar archivo** genera el `contenido.json`
+actualizado; ella te lo manda y tú lo subes al repositorio.
+
+### Sobre la clave
+
+La clave del panel solo evita que alguien entre por curiosidad. **No es seguridad real:**
+en una web estática cualquiera puede leer el código. Lo que de verdad protege la publicación
+es el token de GitHub — sin él, nadie puede cambiar la página aunque entre al panel.
+
+Para cambiar la clave, genera el SHA-256 de la nueva y pégalo en `assets/js/admin.js`
+(constante `claveHash`):
+
+```bash
+node -e "console.log(require('crypto').createHash('sha256').update('TU-CLAVE-NUEVA').digest('hex'))"
+```
+
+---
+
+## 2. Cambios que se hacen en el código
 
 ### El número de WhatsApp
 
-En `assets/js/app.js`, arriba del todo:
+Se edita desde el panel. Si lo quieres cambiar a mano, está en `contenido.json`:
 
-```js
-const CONFIG = {
-  phone: '50760249687',   // ← formato internacional, sin + ni espacios
-  email: ''
-};
+```json
+"contacto": { "whatsapp": "50760249687" }
 ```
 
-Ese número alimenta **todos** los botones de WhatsApp de la página.
-También conviene actualizarlo en el pie de página (`index.html`, busca `+507 6024-9687`).
+Formato internacional, sin `+` ni espacios. Ese número alimenta **todos** los botones de
+WhatsApp de la página. Recuerda cambiarlo también en `privacidad.html` y `terminos.html`.
 
-### Activar el correo con las fotos adjuntas
+### Agregar fotos a la galería
 
-Hoy el formulario de propuestas abre WhatsApp con todos los datos listos y copia la primera
-foto al portapapeles para que el cliente solo la pegue en el chat.
-
-Si además quieres que las fotos lleguen **automáticamente al correo**, pon el correo en
-`CONFIG.email`:
-
-```js
-const CONFIG = {
-  phone: '50760249687',
-  email: 'correodeladuena@gmail.com'
-};
-```
-
-La primera vez que alguien envíe el formulario, [FormSubmit](https://formsubmit.co) manda un
-correo de activación: hay que abrirlo y confirmar una sola vez. Desde ahí, cada propuesta
-llega al correo con las imágenes adjuntas. Es gratis y no requiere crear cuenta.
-
-### Agregar o cambiar fotos de la galería
-
-1. Copia la foto nueva en `assets/gallery/` (por ejemplo `g13.jpg`).
-2. En `index.html`, busca `<div class="gallery"` y duplica un bloque `<figure class="gitem">`:
+1. Copia la foto en `assets/gallery/` (por ejemplo `g13.jpg`).
+2. En `index.html`, busca `<div class="gallery"` y duplica un bloque:
 
 ```html
 <figure class="gitem" data-cat="cumple">
-  <button data-cursor="zoom" aria-label="Ampliar: Mi decoración">
+  <button aria-label="Ampliar: Mi decoración">
     <img src="assets/gallery/g13.jpg" alt="Descripción de la foto" loading="lazy">
     <figcaption><b>Título</b><span>Detalle corto</span></figcaption>
   </button>
 </figure>
 ```
 
-`data-cat` define en qué filtro aparece. Los valores son:
-`cumple`, `baby`, `bouquet`, `regalo`, `catalogo`.
+`data-cat` define en qué filtro aparece: `cumple`, `baby`, `bouquet`, `regalo`, `catalogo`.
 
-### Cambiar precios
+### La ubicación del mapa
 
-Están en `index.html`, en la sección `<section class="section" id="paquetes">`.
-Los precios actuales salieron de los flyers publicados en Instagram.
+Las coordenadas están en `index.html` (sección `#ubicacion`) y se repiten en el mapa, en el
+botón de Waze y en el de Google Maps:
+
+```
+8.9390414, -79.6420196
+```
+
+### Activar el correo con las fotos adjuntas
+
+Hoy el formulario abre WhatsApp con todos los datos y copia la primera foto al portapapeles.
+Si además quieres que las fotos lleguen por correo, hay que reactivar el bloque de
+[FormSubmit](https://formsubmit.co) — está documentado en el historial de git (commit inicial).
 
 ---
 
-## Ver la página en la computadora
+## 3. Ver la página en la computadora
 
 ```bash
 python3 -m http.server 4321
@@ -85,9 +133,7 @@ Y abre <http://localhost:4321>.
 
 ---
 
-## Publicar los cambios
-
-Cada vez que edites algo:
+## 4. Publicar cambios de código
 
 ```bash
 git add -A && git commit -m "Actualizo la página" && git push
@@ -97,11 +143,27 @@ GitHub Pages actualiza el sitio solo, en un minuto aproximadamente.
 
 ---
 
+## 5. Pendientes / cosas a confirmar con la dueña
+
+- [ ] **Formas de pago.** El campo está en el panel pero con un texto genérico
+      ("Escríbenos por WhatsApp para coordinar el pago"). Si acepta Yappy, ACH o efectivo,
+      conviene ponerlo — vende mucho más.
+- [ ] **Política de reserva y cancelación.** `terminos.html` dice que se acuerda por WhatsApp
+      al reservar, porque no teníamos su política real. Si tiene una (abono del X%, cancelación
+      con N días), hay que escribirla ahí.
+- [ ] **Horario.** Está puesto "Lunes a domingo · 8:00 a.m. a 8:00 p.m." como referencia.
+      Confirmar el real y corregirlo desde el panel.
+- [ ] **Testimonios.** No se pusieron porque no había reseñas reales verificables. Si consigue
+      3 o 4 de clientes, valdría la pena agregar una sección.
+
+---
+
 ## Notas
 
-- Las fotos y el logo provienen de la cuenta de Instagram del negocio, usadas con permiso
-  de la dueña.
-- La página no incluye testimonios ni cantidad de eventos porque no había datos reales
-  verificables; si la dueña los aporta, se pueden agregar.
-- Funciona sin JavaScript (se ve todo, sin las animaciones) y respeta la preferencia de
+- Las fotos y el logo provienen del Instagram del negocio, usadas con permiso de la dueña.
+- Los precios salieron de los flyers publicados en su Instagram.
+- La página funciona sin JavaScript (se ve todo, sin animaciones) y respeta la preferencia de
   "reducir movimiento" del sistema.
+- El aviso de cookies y los textos legales están redactados según la **Ley 81 de 2019** de
+  Panamá sobre protección de datos personales. Son un punto de partida sólido, no un
+  dictamen legal: si el negocio crece, conviene que un abogado los revise.

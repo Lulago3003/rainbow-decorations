@@ -5,9 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Rainbow Decorations — Decoración de fiestas en Arraiján, Panamá Oeste</title>
 <meta name="description" content="Decoración con globos, mamparas personalizadas, bouquets y alquiler de mobiliario para cumpleaños, baby showers y todo tipo de eventos en Arraiján y Panamá Oeste. Montaje y desmontaje incluido.">
-<meta name="theme-color" content="#FFF9F4">
+<meta name="theme-color" content="#FFF8F3">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/gallery/logo.jpg">
+<link rel="canonical" href="https://lulago3003.github.io/rainbow-decorations/">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Rainbow Decorations — Creando momentos inolvidables">
@@ -18,10 +19,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
-<!-- Marca que JS está vivo: las animaciones de entrada solo se activan
-     con esta clase, así nadie se queda con la página en blanco. -->
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css?v=2">
 <script>document.documentElement.classList.add('js');</script>
 
 <script type="application/ld+json">
@@ -30,10 +29,20 @@
   "@type": "LocalBusiness",
   "name": "Rainbow Decorations",
   "description": "Decoración de fiestas, globos, mamparas personalizadas, bouquets y alquiler de mobiliario para eventos.",
-  "image": "assets/gallery/g03.jpg",
+  "image": "https://lulago3003.github.io/rainbow-decorations/assets/gallery/g03.jpg",
+  "url": "https://lulago3003.github.io/rainbow-decorations/",
   "telephone": "+50760249687",
+  "priceRange": "$18 - $125",
   "areaServed": "Arraiján, Panamá Oeste, Panamá",
-  "address": { "@type": "PostalAddress", "addressLocality": "Arraiján", "addressRegion": "Panamá Oeste", "addressCountry": "PA" },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Vía Arraiján, La Polvareda",
+    "addressLocality": "Arraiján",
+    "addressRegion": "Panamá Oeste",
+    "postalCode": "1001",
+    "addressCountry": "PA"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": 8.9390414, "longitude": -79.6420196 },
   "sameAs": ["https://www.instagram.com/rainbowdecorations01/"]
 }
 </script>
@@ -51,28 +60,34 @@
   </div>
 </div>
 
-<!-- ============ SCROLL PROGRESS ============ -->
 <div class="progress" id="progress" aria-hidden="true"><i></i></div>
 
-<!-- ============ CUSTOM CURSOR ============ -->
-<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"></span></div>
+<!-- ============ BARRA DE PROMOCIÓN (editable) ============ -->
+<aside class="promo" id="promo" hidden>
+  <div class="promo__in">
+    <span class="promo__tag" id="promoTag"></span>
+    <p class="promo__text" id="promoText"></p>
+    <a class="promo__cta" id="promoCta" href="#" target="_blank" rel="noopener"></a>
+  </div>
+  <button class="promo__x" id="promoClose" aria-label="Cerrar promoción">&times;</button>
+</aside>
 
 <!-- ============ NAV ============ -->
 <header class="nav" id="nav">
-  <a class="nav__brand" href="#top" data-cursor="link">
+  <a class="nav__brand" href="#top">
     <img src="assets/gallery/logo.jpg" alt="" width="40" height="40">
     <span>Rainbow<em>Decorations</em></span>
   </a>
   <nav class="nav__links" id="navLinks" aria-label="Principal">
-    <a href="#servicios" data-cursor="link">Servicios</a>
-    <a href="#galeria" data-cursor="link">Galería</a>
-    <a href="#paquetes" data-cursor="link">Paquetes</a>
-    <a href="#proceso" data-cursor="link">Cómo funciona</a>
-    <a href="#propuesta" data-cursor="link">Tu idea</a>
-    <a href="#faq" data-cursor="link">Preguntas</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#galeria">Galería</a>
+    <a href="#instagram">Instagram</a>
+    <a href="#paquetes">Paquetes</a>
+    <a href="#propuesta">Tu idea</a>
+    <a href="#ubicacion">Cómo llegar</a>
   </nav>
-  <a class="btn btn--sm btn--grad nav__cta" href="#" data-wa="Hola Rainbow Decorations! 👋 Vi su página web y quiero cotizar una decoración." data-cursor="link">
-    <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.13h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.36c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.17 8.17 0 0 1 2.41 5.82c0 4.54-3.7 8.21-8.24 8.21Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.14.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.2-.58.2-1.08.14-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
+  <a class="btn btn--sm btn--grad nav__cta" href="#" data-wa="Hola Rainbow Decorations! 👋 Vi su página web y quiero cotizar una decoración.">
+    <svg class="ico-wa" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
     WhatsApp
   </a>
   <button class="nav__burger" id="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
@@ -89,14 +104,12 @@
 
   <div class="hero__grid">
     <div class="hero__copy">
-      <span class="pill reveal" data-reveal>
-        <i class="pill__dot"></i> Arraiján · Panamá Oeste
-      </span>
+      <span class="pill reveal" data-reveal><i class="pill__dot"></i> Arraiján · Panamá Oeste</span>
 
       <h1 class="hero__title">
-        <span class="line"><span data-split>Creando</span></span>
-        <span class="line"><span data-split>momentos</span></span>
-        <span class="line"><em class="grad" data-split>inolvidables</em></span>
+        <span class="line"><span>Creando</span></span>
+        <span class="line"><span>momentos</span></span>
+        <span class="line"><em class="grad">inolvidables</em></span>
       </h1>
 
       <p class="hero__lead reveal" data-reveal data-delay="1">
@@ -105,11 +118,11 @@
       </p>
 
       <div class="hero__cta reveal" data-reveal data-delay="2">
-        <a class="btn btn--grad btn--lg" href="#" data-wa="Hola Rainbow Decorations! 👋 Quiero cotizar una decoración para mi evento." data-cursor="link" data-confetti>
+        <a class="btn btn--grad btn--lg" href="#" data-wa="Hola Rainbow Decorations! 👋 Quiero cotizar una decoración para mi evento." data-confetti>
           Cotizar por WhatsApp
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-7 7 7-7 7"/></svg>
         </a>
-        <a class="btn btn--ghost btn--lg" href="#galeria" data-cursor="link">Ver la galería</a>
+        <a class="btn btn--ghost btn--lg" href="#galeria">Ver la galería</a>
       </div>
 
       <ul class="hero__stats reveal" data-reveal data-delay="3">
@@ -120,8 +133,8 @@
     </div>
 
     <div class="hero__stage" id="heroStage">
-      <figure class="shot shot--a" data-depth="18"><img src="assets/gallery/g03.jpg" alt="Decoración de cumpleaños temática Bluey con arco de globos de colores" loading="eager" width="640" height="555"></figure>
-      <figure class="shot shot--b" data-depth="34"><img src="assets/gallery/g09.jpg" alt="Arco de globos arcoíris con unicornio para un quinto cumpleaños" loading="eager" width="512" height="640"></figure>
+      <figure class="shot shot--a" data-depth="18"><img src="assets/gallery/g03.jpg" alt="Decoración de cumpleaños temática Bluey con arco de globos de colores" width="640" height="555"></figure>
+      <figure class="shot shot--b" data-depth="34"><img src="assets/gallery/g09.jpg" alt="Arco de globos arcoíris con unicornio para un quinto cumpleaños" width="512" height="640"></figure>
       <figure class="shot shot--c" data-depth="52"><img src="assets/gallery/g04.jpg" alt="Decoración de baby shower Boy or Girl en tonos beige, blanco y dorado" loading="lazy" width="481" height="640"></figure>
       <div class="shot__badge" data-depth="70">
         <img src="assets/gallery/logo.jpg" alt="Logo de Rainbow Decorations" width="56" height="56">
@@ -130,7 +143,29 @@
     </div>
   </div>
 
-  <a class="hero__scroll" href="#servicios" aria-label="Bajar" data-cursor="link"><span></span></a>
+  <a class="hero__scroll" href="#confianza" aria-label="Bajar"><span></span></a>
+</section>
+
+<!-- ============ FRANJA DE CONFIANZA ============ -->
+<section class="trust" id="confianza">
+  <div class="wrap trust__grid">
+    <div class="trust__item reveal" data-reveal>
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" d="m4 12 5 5L20 6"/></svg>
+      <div><b>Montaje y desmontaje</b><span>incluido en los paquetes</span></div>
+    </div>
+    <div class="trust__item reveal" data-reveal data-delay="1">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" d="M3 7h11v9H3zM14 10h4l3 3v3h-7zM7 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm11 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg>
+      <div><b>Delivery propio</b><span>en Arraiján y alrededores</span></div>
+    </div>
+    <div class="trust__item reveal" data-reveal data-delay="2">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" d="M12 3 9.5 8.5 3.5 9.4l4.3 4.2-1 6 5.2-2.8 5.2 2.8-1-6 4.3-4.2-6-.9z"/></svg>
+      <div><b>Fotos 100% reales</b><span>todo lo que ves lo montamos</span></div>
+    </div>
+    <div class="trust__item reveal" data-reveal data-delay="3">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-4.6-7-9.6A4.2 4.2 0 0 1 12 8.6a4.2 4.2 0 0 1 7 2.8C19 16.4 12 21 12 21Z"/></svg>
+      <div><b>Temáticas a la medida</b><span>la armamos como la sueñas</span></div>
+    </div>
+  </div>
 </section>
 
 <!-- ============ MARQUEE ============ -->
@@ -145,7 +180,7 @@
   </div>
 </div>
 
-<!-- ============ SERVICIOS ============ -->
+<!-- ============ SERVICIOS (tarjetas con foto de fondo) ============ -->
 <section class="section" id="servicios">
   <div class="wrap">
     <header class="head">
@@ -154,60 +189,90 @@
       <p class="head__lead reveal" data-reveal data-delay="2">Nos encargamos del diseño, el montaje y el desmontaje. Tú solo disfruta.</p>
     </header>
 
-    <div class="cards">
-      <article class="card tilt reveal" data-reveal data-tilt>
-        <div class="card__icon" style="--c1:#FF5FA2;--c2:#8B5CF6">
-          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 3c3 0 5 2.3 5 5.4 0 3.4-2.6 6.2-5 7.6-2.4-1.4-5-4.2-5-7.6C7 5.3 9 3 12 3Zm0 13v2m-1.4 2.6c.4.9 2.4.9 2.8 0"/></svg>
+    <div class="svc">
+      <article class="svc__card svc__card--wide reveal" data-reveal>
+        <img src="assets/gallery/g03.jpg" alt="" loading="lazy" aria-hidden="true">
+        <div class="svc__body">
+          <h3>Cumpleaños temáticos</h3>
+          <p>Arcos orgánicos de globos, mamparas con el nombre, personajes en foamboard y todos los detalles de la temática que sueñas.</p>
+          <a class="svc__link" href="#" data-wa="Hola! 👋 Quiero cotizar una *decoración de cumpleaños temático*.">Cotizar <span aria-hidden="true">→</span></a>
         </div>
-        <h3>Cumpleaños temáticos</h3>
-        <p>Arcos orgánicos de globos, mamparas con el nombre, personajes en foamboard y todos los detalles de la temática que sueñas.</p>
       </article>
 
-      <article class="card tilt reveal" data-reveal data-delay="1" data-tilt>
-        <div class="card__icon" style="--c1:#38BDF8;--c2:#FF5FA2">
-          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-4.6-7-9.6A4.2 4.2 0 0 1 12 8.6a4.2 4.2 0 0 1 7 2.8C19 16.4 12 21 12 21Z"/></svg>
+      <article class="svc__card reveal" data-reveal data-delay="1">
+        <img src="assets/gallery/g04.jpg" alt="" loading="lazy" aria-hidden="true">
+        <div class="svc__body">
+          <h3>Baby shower & gender reveal</h3>
+          <p>Paletas suaves en beige, dorado, rosado y celeste. Ositos, mamparas y cilindros para revelar la gran noticia.</p>
+          <a class="svc__link" href="#" data-wa="Hola! 👋 Quiero cotizar una decoración de *baby shower o gender reveal*.">Cotizar <span aria-hidden="true">→</span></a>
         </div>
-        <h3>Baby shower & gender reveal</h3>
-        <p>Paletas suaves en beige, dorado, rosado y celeste. Ositos, mamparas y cilindros decorados para revelar la gran noticia.</p>
       </article>
 
-      <article class="card tilt reveal" data-reveal data-delay="2" data-tilt>
-        <div class="card__icon" style="--c1:#FBBF24;--c2:#FB923C">
-          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 12c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4Zm0 0v9m-3-3h6"/></svg>
+      <article class="svc__card reveal" data-reveal data-delay="2">
+        <img src="assets/gallery/g07.jpg" alt="" loading="lazy" aria-hidden="true">
+        <div class="svc__body">
+          <h3>Bouquets de globos</h3>
+          <p>Números gigantes, burbujas con confeti y nombre personalizado, coronas y flores. Perfectos para sorprender.</p>
+          <a class="svc__link" href="#" data-wa="Hola! 👋 Quiero cotizar un *bouquet de globos*.">Cotizar <span aria-hidden="true">→</span></a>
         </div>
-        <h3>Bouquets de globos</h3>
-        <p>Números gigantes, burbujas con confeti y nombre personalizado, coronas y flores. Perfectos para sorprender y para delivery.</p>
       </article>
 
-      <article class="card tilt reveal" data-reveal data-tilt>
-        <div class="card__icon" style="--c1:#34D399;--c2:#38BDF8">
-          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 9h18v11H3zM3 9l2-4h14l2 4M12 5v15"/></svg>
+      <article class="svc__card reveal" data-reveal>
+        <img src="assets/gallery/g12.jpg" alt="" loading="lazy" aria-hidden="true">
+        <div class="svc__body">
+          <h3>Cajas y regalos</h3>
+          <p>Cajas temáticas con chocolates, ramos de rosas en cinta, girasoles y detalles con Ferrero Rocher armados a mano.</p>
+          <a class="svc__link" href="#" data-wa="Hola! 👋 Quiero cotizar una *caja de regalo personalizada*.">Cotizar <span aria-hidden="true">→</span></a>
         </div>
-        <h3>Cajas y regalos</h3>
-        <p>Cajas temáticas con chocolates, ramos de rosas en cinta, girasoles y detalles con Ferrero Rocher armados a mano.</p>
       </article>
 
-      <article class="card tilt reveal" data-reveal data-delay="1" data-tilt>
-        <div class="card__icon" style="--c1:#8B5CF6;--c2:#22D3EE">
-          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M4 20V8m16 12V8M4 8a8 8 0 0 1 16 0M8 20v-4h8v4"/></svg>
+      <article class="svc__card reveal" data-reveal data-delay="1">
+        <img src="assets/gallery/g09.jpg" alt="" loading="lazy" aria-hidden="true">
+        <div class="svc__body">
+          <h3>Alquiler de mobiliario</h3>
+          <p>Aros, marcos ajustables, mesas de arrimo, grama artificial y escaleras decorativas. Combos desde <b>$18</b>.</p>
+          <a class="svc__link" href="#" data-wa="Hola! 👋 Quiero información sobre el *alquiler de mobiliario*.">Cotizar <span aria-hidden="true">→</span></a>
         </div>
-        <h3>Alquiler de mobiliario</h3>
-        <p>Aros, marcos ajustables, mesas de arrimo, grama artificial y escaleras decorativas. Combos desde <b>$18</b>.</p>
       </article>
 
-      <article class="card tilt reveal" data-reveal data-delay="2" data-tilt>
-        <div class="card__icon" style="--c1:#E63E8F;--c2:#FBBF24">
-          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 7h11v9H3zM14 10h4l3 3v3h-7zM7 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm11 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg>
+      <article class="svc__card svc__card--wide reveal" data-reveal data-delay="2">
+        <img src="assets/gallery/g08.jpg" alt="" loading="lazy" aria-hidden="true">
+        <div class="svc__body">
+          <h3>Delivery & montaje</h3>
+          <p>Llevamos, montamos y desmontamos. Cubrimos Arraiján y alrededores en Panamá Oeste; consúltanos por tu área.</p>
+          <a class="svc__link" href="#ubicacion">Ver cobertura <span aria-hidden="true">→</span></a>
         </div>
-        <h3>Delivery & montaje</h3>
-        <p>Llevamos, montamos y desmontamos. Cubrimos Arraiján y alrededores en Panamá Oeste; consúltanos por tu área.</p>
       </article>
     </div>
   </div>
 </section>
 
+<!-- ============ TEMÁTICAS POPULARES ============ -->
+<section class="section section--tint" id="tematicas">
+  <div class="wrap">
+    <header class="head">
+      <span class="eyebrow reveal" data-reveal>Ideas que funcionan</span>
+      <h2 class="h2 reveal" data-reveal data-delay="1">Temáticas <em class="grad">más pedidas</em></h2>
+      <p class="head__lead reveal" data-reveal data-delay="2">Estas ya las hemos montado. Si la tuya no está en la lista, también la hacemos.</p>
+    </header>
+
+    <div class="themes">
+      <a class="theme reveal" data-reveal href="#" data-wa="Hola! 👋 Quiero una decoración temática de *Bluey*."><img src="assets/gallery/g03.jpg" alt="Decoración temática Bluey" loading="lazy"><span>Bluey</span></a>
+      <a class="theme reveal" data-reveal data-delay="1" href="#" data-wa="Hola! 👋 Quiero una decoración temática de *dinosaurios*."><img src="assets/gallery/g08.jpg" alt="Decoración temática de dinosaurios" loading="lazy"><span>Dinosaurios</span></a>
+      <a class="theme reveal" data-reveal data-delay="2" href="#" data-wa="Hola! 👋 Quiero una decoración temática de *unicornio y arcoíris*."><img src="assets/gallery/g09.jpg" alt="Decoración de unicornio y arcoíris" loading="lazy"><span>Unicornio</span></a>
+      <a class="theme reveal" data-reveal data-delay="3" href="#" data-wa="Hola! 👋 Quiero una decoración de *gender reveal*."><img src="assets/gallery/g05.jpg" alt="Decoración de gender reveal" loading="lazy"><span>Gender reveal</span></a>
+      <a class="theme reveal" data-reveal data-delay="4" href="#" data-wa="Hola! 👋 Quiero una decoración de *baby shower*."><img src="assets/gallery/g04.jpg" alt="Decoración de baby shower" loading="lazy"><span>Baby shower</span></a>
+      <a class="theme reveal" data-reveal data-delay="5" href="#" data-wa="Hola! 👋 Quiero una decoración temática de *Hot Wheels*."><img src="assets/gallery/g10.jpg" alt="Caja de regalo temática Hot Wheels" loading="lazy"><span>Hot Wheels</span></a>
+    </div>
+
+    <p class="themes__note reveal" data-reveal>
+      ¿Tienes otra en mente? <a href="#" data-wa="Hola! 👋 Tengo una temática en mente y quiero saber si la pueden hacer.">Pregúntanos, la armamos</a>.
+    </p>
+  </div>
+</section>
+
 <!-- ============ GALERÍA ============ -->
-<section class="section section--tint" id="galeria">
+<section class="section" id="galeria">
   <div class="wrap">
     <header class="head">
       <span class="eyebrow reveal" data-reveal>Trabajos reales</span>
@@ -216,33 +281,63 @@
     </header>
 
     <div class="filters reveal" data-reveal role="tablist" aria-label="Filtrar galería">
-      <button class="chip is-on" data-filter="all" role="tab" aria-selected="true" data-cursor="link">Todo</button>
-      <button class="chip" data-filter="cumple" role="tab" aria-selected="false" data-cursor="link">Cumpleaños</button>
-      <button class="chip" data-filter="baby" role="tab" aria-selected="false" data-cursor="link">Baby shower</button>
-      <button class="chip" data-filter="bouquet" role="tab" aria-selected="false" data-cursor="link">Bouquets</button>
-      <button class="chip" data-filter="regalo" role="tab" aria-selected="false" data-cursor="link">Regalos</button>
-      <button class="chip" data-filter="catalogo" role="tab" aria-selected="false" data-cursor="link">Catálogo</button>
+      <button class="chip is-on" data-filter="all" role="tab" aria-selected="true">Todo</button>
+      <button class="chip" data-filter="cumple" role="tab" aria-selected="false">Cumpleaños</button>
+      <button class="chip" data-filter="baby" role="tab" aria-selected="false">Baby shower</button>
+      <button class="chip" data-filter="bouquet" role="tab" aria-selected="false">Bouquets</button>
+      <button class="chip" data-filter="regalo" role="tab" aria-selected="false">Regalos</button>
+      <button class="chip" data-filter="catalogo" role="tab" aria-selected="false">Catálogo</button>
     </div>
 
     <div class="gallery" id="gallery">
-      <figure class="gitem" data-cat="cumple"><button data-cursor="zoom" aria-label="Ampliar: Temática Bluey"><img src="assets/gallery/g03.jpg" alt="Arco de globos de colores con flores margarita, mamparas y letrero neón para un cumpleaños temática Bluey" loading="lazy" width="640" height="555"><figcaption><b>Temática Bluey</b><span>Arco orgánico + neón</span></figcaption></button></figure>
-      <figure class="gitem" data-cat="cumple"><button data-cursor="zoom" aria-label="Ampliar: Fiesta dinosaurios"><img src="assets/gallery/g08.jpg" alt="Decoración de fiesta de dinosaurios con arco de globos verdes y naranjas y fondo de selva" loading="lazy" width="640" height="580"><figcaption><b>Aventura jurásica</b><span>Backdrop selva + globos</span></figcaption></button></figure>
-      <figure class="gitem" data-cat="cumple"><button data-cursor="zoom" aria-label="Ampliar: Arco arcoíris"><img src="assets/gallery/g09.jpg" alt="Arco de globos arcoíris al aire libre con unicornio y número cinco dorado" loading="lazy" width="512" height="640"><figcaption><b>Arcoíris & unicornio</b><span>Montaje al aire libre</span></figcaption></button></figure>
-      <figure class="gitem" data-cat="baby"><button data-cursor="zoom" aria-label="Ampliar: Baby shower Boy or Girl"><img src="assets/gallery/g04.jpg" alt="Baby shower Boy or Girl con globos beige, blancos y dorados, osito y cilindros decorados" loading="lazy" width="481" height="640"><figcaption><b>Boy or Girl</b><span>Beige, blanco & dorado</span></figcaption></button></figure>
-      <figure class="gitem" data-cat="baby"><button data-cursor="zoom" aria-label="Ampliar: Gender reveal"><img src="assets/gallery/g05.jpg" alt="Gender reveal con mamparas Niña o Niño, globos rosados, celestes y dorados y ositos" loading="lazy" width="550" height="640"><figcaption><b>¿Niña o Niño?</b><span>Gender reveal</span></figcaption></button></figure>
-      <figure class="gitem" data-cat="bouquet"><button data-cursor="zoom" aria-label="Ampliar: Bouquet número 40"><img src="assets/gallery/g06.jpg" alt="Bouquet de globos con número 40 plateado, corona dorada y globos azules" loading="lazy" width="512" height="640"><figcaption><b>Bouquet 40</b><span>Número + corona</span></figcaption></button></figure>
-      <figure class="gitem" data-cat="bouquet"><button data-cursor="zoom" aria-label="Ampliar: Bouquet rosado"><img src="assets/gallery/g07.jpg" alt="Bouquet de globos rosados con burbuja de confeti personalizada y flores" loading="lazy" width="512" height="640"><figcaption><b>Bouquet personalizado</b><span>Burbuja con confeti</span></figcaption></button></figure>
-      <figure class="gitem" data-cat="regalo"><button data-cursor="zoom" aria-label="Ampliar: Caja Hot Wheels"><img src="assets/gallery/g10.jpg" alt="Caja de regalo temática Hot Wheels con chocolates y lazo rojo" loading="lazy" width="566" height="640"><figcaption><b>Caja Hot Wheels</b><span>Regalo temático</span></figcaption></button></figure>
-      <figure class="gitem" data-cat="regalo"><button data-cursor="zoom" aria-label="Ampliar: Ramo girasol"><img src="assets/gallery/g11.jpg" alt="Ramo de girasol hecho en cinta con mariposas doradas y bombón" loading="lazy" width="640" height="547"><figcaption><b>Girasol en cinta</b><span>Hecho a mano</span></figcaption></button></figure>
-      <figure class="gitem" data-cat="regalo"><button data-cursor="zoom" aria-label="Ampliar: Caja de rosas"><img src="assets/gallery/g12.jpg" alt="Caja de rosas amarillas en cinta con bombones Ferrero Rocher y mariposa dorada" loading="lazy" width="512" height="640"><figcaption><b>Caja de rosas</b><span>Rosas + Ferrero</span></figcaption></button></figure>
-      <figure class="gitem" data-cat="catalogo"><button data-cursor="zoom" aria-label="Ampliar: Catálogo de decoraciones"><img src="assets/gallery/g01.jpg" alt="Catálogo de decoraciones con paquetes de 85 y 125 dólares" loading="lazy" width="512" height="640"><figcaption><b>Catálogo</b><span>Paquetes $85 y $125</span></figcaption></button></figure>
-      <figure class="gitem" data-cat="catalogo"><button data-cursor="zoom" aria-label="Ampliar: Alquiler de mobiliario"><img src="assets/gallery/g02.jpg" alt="Catálogo de alquiler de mobiliario con combos de aro, marco ajustable y mesas" loading="lazy" width="512" height="640"><figcaption><b>Mobiliario</b><span>Combos desde $18</span></figcaption></button></figure>
+      <figure class="gitem" data-cat="cumple"><button aria-label="Ampliar: Temática Bluey"><img src="assets/gallery/g03.jpg" alt="Arco de globos de colores con flores margarita, mamparas y letrero neón para un cumpleaños temática Bluey" loading="lazy" width="640" height="555"><figcaption><b>Temática Bluey</b><span>Arco orgánico + neón</span></figcaption></button></figure>
+      <figure class="gitem" data-cat="cumple"><button aria-label="Ampliar: Fiesta dinosaurios"><img src="assets/gallery/g08.jpg" alt="Decoración de fiesta de dinosaurios con arco de globos verdes y naranjas y fondo de selva" loading="lazy" width="640" height="580"><figcaption><b>Aventura jurásica</b><span>Backdrop selva + globos</span></figcaption></button></figure>
+      <figure class="gitem" data-cat="cumple"><button aria-label="Ampliar: Arco arcoíris"><img src="assets/gallery/g09.jpg" alt="Arco de globos arcoíris al aire libre con unicornio y número cinco dorado" loading="lazy" width="512" height="640"><figcaption><b>Arcoíris & unicornio</b><span>Montaje al aire libre</span></figcaption></button></figure>
+      <figure class="gitem" data-cat="baby"><button aria-label="Ampliar: Baby shower Boy or Girl"><img src="assets/gallery/g04.jpg" alt="Baby shower Boy or Girl con globos beige, blancos y dorados, osito y cilindros decorados" loading="lazy" width="481" height="640"><figcaption><b>Boy or Girl</b><span>Beige, blanco & dorado</span></figcaption></button></figure>
+      <figure class="gitem" data-cat="baby"><button aria-label="Ampliar: Gender reveal"><img src="assets/gallery/g05.jpg" alt="Gender reveal con mamparas Niña o Niño, globos rosados, celestes y dorados y ositos" loading="lazy" width="550" height="640"><figcaption><b>¿Niña o Niño?</b><span>Gender reveal</span></figcaption></button></figure>
+      <figure class="gitem" data-cat="bouquet"><button aria-label="Ampliar: Bouquet número 40"><img src="assets/gallery/g06.jpg" alt="Bouquet de globos con número 40 plateado, corona dorada y globos azules" loading="lazy" width="512" height="640"><figcaption><b>Bouquet 40</b><span>Número + corona</span></figcaption></button></figure>
+      <figure class="gitem" data-cat="bouquet"><button aria-label="Ampliar: Bouquet rosado"><img src="assets/gallery/g07.jpg" alt="Bouquet de globos rosados con burbuja de confeti personalizada y flores" loading="lazy" width="512" height="640"><figcaption><b>Bouquet personalizado</b><span>Burbuja con confeti</span></figcaption></button></figure>
+      <figure class="gitem" data-cat="regalo"><button aria-label="Ampliar: Caja Hot Wheels"><img src="assets/gallery/g10.jpg" alt="Caja de regalo temática Hot Wheels con chocolates y lazo rojo" loading="lazy" width="566" height="640"><figcaption><b>Caja Hot Wheels</b><span>Regalo temático</span></figcaption></button></figure>
+      <figure class="gitem" data-cat="regalo"><button aria-label="Ampliar: Ramo girasol"><img src="assets/gallery/g11.jpg" alt="Ramo de girasol hecho en cinta con mariposas doradas y bombón" loading="lazy" width="640" height="547"><figcaption><b>Girasol en cinta</b><span>Hecho a mano</span></figcaption></button></figure>
+      <figure class="gitem" data-cat="regalo"><button aria-label="Ampliar: Caja de rosas"><img src="assets/gallery/g12.jpg" alt="Caja de rosas amarillas en cinta con bombones Ferrero Rocher y mariposa dorada" loading="lazy" width="512" height="640"><figcaption><b>Caja de rosas</b><span>Rosas + Ferrero</span></figcaption></button></figure>
+      <figure class="gitem" data-cat="catalogo"><button aria-label="Ampliar: Catálogo de decoraciones"><img src="assets/gallery/g01.jpg" alt="Catálogo de decoraciones con paquetes de 85 y 125 dólares" loading="lazy" width="512" height="640"><figcaption><b>Catálogo</b><span>Paquetes $85 y $125</span></figcaption></button></figure>
+      <figure class="gitem" data-cat="catalogo"><button aria-label="Ampliar: Alquiler de mobiliario"><img src="assets/gallery/g02.jpg" alt="Catálogo de alquiler de mobiliario con combos de aro, marco ajustable y mesas" loading="lazy" width="512" height="640"><figcaption><b>Mobiliario</b><span>Combos desde $18</span></figcaption></button></figure>
     </div>
+  </div>
+</section>
 
-    <p class="gallery__note reveal" data-reveal>
-      ¿Quieres ver más? Todo nuestro trabajo está en
-      <a href="https://www.instagram.com/rainbowdecorations01/" target="_blank" rel="noopener" data-cursor="link">@rainbowdecorations01</a>.
+<!-- ============ INSTAGRAM (editable) ============ -->
+<section class="section section--tint" id="instagram" hidden>
+  <div class="wrap">
+    <header class="head">
+      <span class="eyebrow reveal" data-reveal>
+        <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><path fill="currentColor" d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16m0 5a4.84 4.84 0 1 0 0 9.68 4.84 4.84 0 0 0 0-9.68m0 7.98a3.14 3.14 0 1 1 0-6.28 3.14 3.14 0 0 1 0 6.28m6.16-8.17a1.13 1.13 0 1 1-2.26 0 1.13 1.13 0 0 1 2.26 0"/></svg>
+        En vivo desde Instagram
+      </span>
+      <h2 class="h2 reveal" data-reveal data-delay="1" id="igTitulo">Lo último de nuestro <em class="grad">Instagram</em></h2>
+      <p class="head__lead reveal" data-reveal data-delay="2" id="igBajada"></p>
+    </header>
+
+    <div class="igfeed" id="igFeed"></div>
+
+    <p class="igfeed__note reveal" data-reveal>
+      <a class="btn btn--outline" id="igPerfil" href="https://www.instagram.com/rainbowdecorations01/" target="_blank" rel="noopener">Seguir en Instagram</a>
     </p>
+  </div>
+</section>
+
+<!-- ============ CONSULTA DE FECHA ============ -->
+<section class="datecheck">
+  <div class="wrap datecheck__in reveal" data-reveal>
+    <div class="datecheck__copy">
+      <h2>¿Tu fecha está libre?</h2>
+      <p>Los fines de semana se llenan rápido. Escoge tu fecha y te confirmamos al momento.</p>
+    </div>
+    <form class="datecheck__form" id="dateForm">
+      <label class="sr-only" for="dc-date">Fecha del evento</label>
+      <input id="dc-date" type="date" required>
+      <button class="btn btn--grad" type="submit">Consultar</button>
+    </form>
   </div>
 </section>
 
@@ -255,60 +350,9 @@
       <p class="head__lead reveal" data-reveal data-delay="2">Precios base de referencia. El monto final depende de la temática, el tamaño y el lugar del evento.</p>
     </header>
 
-    <div class="plans">
-      <article class="plan reveal" data-reveal>
-        <div class="plan__top">
-          <h3>Decoración Esencial</h3>
-          <p class="plan__for">Ideal para cumpleaños en casa</p>
-          <div class="plan__price"><span class="cur">$</span><b>85</b></div>
-        </div>
-        <ul class="plan__list">
-          <li>Mampara personalizada con nombre</li>
-          <li>Globos en 3 tonos</li>
-          <li>Imagen de la temática</li>
-          <li>Mesas, escalera y grama</li>
-          <li>Brillo para globos</li>
-          <li>Montaje y desmontaje</li>
-        </ul>
-        <a class="btn btn--outline" href="#" data-wa="Hola! 👋 Me interesa el paquete *Decoración Esencial ($85)*. ¿Me pueden dar más información?" data-cursor="link">Reservar este</a>
-      </article>
+    <div class="plans" id="plans"></div>
 
-      <article class="plan plan--star reveal" data-reveal data-delay="1">
-        <span class="plan__tag">Más pedido</span>
-        <div class="plan__top">
-          <h3>Decoración Premium</h3>
-          <p class="plan__for">Para eventos que quieren impactar</p>
-          <div class="plan__price"><span class="cur">$</span><b>125</b></div>
-        </div>
-        <ul class="plan__list">
-          <li>Mampara personalizada con nombre en foamboard</li>
-          <li>Globos en 3 tonos</li>
-          <li>Imagen y accesorios de la temática</li>
-          <li><b>2 mamparas</b>, mesas, escalera y grama</li>
-          <li>Brillo para globos</li>
-          <li>Montaje y desmontaje</li>
-        </ul>
-        <a class="btn btn--grad" href="#" data-wa="Hola! 👋 Me interesa el paquete *Decoración Premium ($125)*. ¿Me pueden dar más información?" data-cursor="link" data-confetti>Reservar este</a>
-      </article>
-
-      <article class="plan reveal" data-reveal data-delay="2">
-        <div class="plan__top">
-          <h3>Alquiler de mobiliario</h3>
-          <p class="plan__for">Si ya tienes tu decoración</p>
-          <div class="plan__price"><span class="from">desde</span><span class="cur">$</span><b>18</b></div>
-        </div>
-        <ul class="plan__list">
-          <li><b>Combo 1 · $18</b> — Aro + grama + 3 mesas</li>
-          <li><b>Combo 2 · $18</b> — Marco ajustable 3×3 + 1 mesa</li>
-          <li>Combo 2 con grama — $22</li>
-          <li>Combo 2 con 3 mesas y grama — $25</li>
-          <li>Varios modelos de mesas disponibles</li>
-        </ul>
-        <a class="btn btn--outline" href="#" data-wa="Hola! 👋 Quiero información sobre el *alquiler de mobiliario* (combos desde $18)." data-cursor="link">Consultar</a>
-      </article>
-    </div>
-
-    <p class="plans__note reveal" data-reveal>¿Tienes algo distinto en mente? Armamos paquetes a la medida — <a href="#propuesta" data-cursor="link">mándanos tu idea</a>.</p>
+    <p class="plans__note reveal" data-reveal>¿Tienes algo distinto en mente? Armamos paquetes a la medida — <a href="#propuesta">mándanos tu idea</a>.</p>
   </div>
 </section>
 
@@ -321,27 +365,16 @@
     </header>
 
     <ol class="steps">
-      <li class="step reveal" data-reveal>
-        <span class="step__n">01</span>
-        <h3>Mándanos tu idea</h3>
-        <p>Escríbenos por WhatsApp o sube tu foto de referencia aquí mismo en la web. Mientras más detalles, mejor.</p>
-      </li>
-      <li class="step reveal" data-reveal data-delay="1">
-        <span class="step__n">02</span>
-        <h3>Te cotizamos</h3>
-        <p>Revisamos disponibilidad para tu fecha y te enviamos la propuesta con el precio cerrado.</p>
-      </li>
-      <li class="step reveal" data-reveal data-delay="2">
-        <span class="step__n">03</span>
-        <h3>Reservas tu fecha</h3>
-        <p>Confirmas y apartamos el día. Coordinamos hora de montaje y todos los detalles del lugar.</p>
-      </li>
-      <li class="step reveal" data-reveal data-delay="3">
-        <span class="step__n">04</span>
-        <h3>Nosotros montamos</h3>
-        <p>Llegamos, montamos todo y al terminar la fiesta desmontamos. Tú solo disfrutas y tomas fotos.</p>
-      </li>
+      <li class="step reveal" data-reveal><span class="step__n">01</span><h3>Mándanos tu idea</h3><p>Escríbenos por WhatsApp o sube tu foto de referencia aquí mismo en la web. Mientras más detalles, mejor.</p></li>
+      <li class="step reveal" data-reveal data-delay="1"><span class="step__n">02</span><h3>Te cotizamos</h3><p>Revisamos disponibilidad para tu fecha y te enviamos la propuesta con el precio cerrado.</p></li>
+      <li class="step reveal" data-reveal data-delay="2"><span class="step__n">03</span><h3>Reservas tu fecha</h3><p>Confirmas y apartamos el día. Coordinamos hora de montaje y todos los detalles del lugar.</p></li>
+      <li class="step reveal" data-reveal data-delay="3"><span class="step__n">04</span><h3>Nosotros montamos</h3><p>Llegamos, montamos todo y al terminar la fiesta desmontamos. Tú solo disfrutas y tomas fotos.</p></li>
     </ol>
+
+    <div class="pay reveal" data-reveal data-delay="4" id="payBox">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 7h18v11H3zM3 11h18M7 15h3"/></svg>
+      <p id="payText"></p>
+    </div>
   </div>
 </section>
 
@@ -387,13 +420,9 @@
           <div class="field">
             <label for="f-type">Tipo de evento</label>
             <select id="f-type" name="tipo">
-              <option>Cumpleaños</option>
-              <option>Baby shower</option>
-              <option>Gender reveal</option>
-              <option>Bouquet de globos</option>
-              <option>Caja o regalo personalizado</option>
-              <option>Alquiler de mobiliario</option>
-              <option>Otro</option>
+              <option>Cumpleaños</option><option>Baby shower</option><option>Gender reveal</option>
+              <option>Bouquet de globos</option><option>Caja o regalo personalizado</option>
+              <option>Alquiler de mobiliario</option><option>Otro</option>
             </select>
           </div>
           <div class="field">
@@ -414,7 +443,7 @@
 
         <div class="field">
           <label id="dropLabel">Fotos de referencia <small>(hasta 3 · JPG o PNG)</small></label>
-          <div class="drop" id="drop" tabindex="0" role="button" aria-labelledby="dropLabel" data-cursor="link">
+          <div class="drop" id="drop" tabindex="0" role="button" aria-labelledby="dropLabel">
             <input type="file" id="f-files" name="fotos" accept="image/*" multiple hidden>
             <svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M12 16V4m0 0L8 8m4-4 4 4M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
             <p><b>Arrastra tus fotos aquí</b><span>o toca para elegirlas</span></p>
@@ -422,7 +451,9 @@
           <div class="thumbs" id="thumbs"></div>
         </div>
 
-        <button class="btn btn--grad btn--lg btn--block" type="submit" id="submitBtn" data-cursor="link">
+        <label class="consent"><input type="checkbox" id="f-consent" required><span>Acepto que usen mis datos para responder mi consulta, según la <a href="privacidad.html" target="_blank" rel="noopener">política de privacidad</a>.</span></label>
+
+        <button class="btn btn--grad btn--lg btn--block" type="submit" id="submitBtn">
           Enviar propuesta
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-7 7 7-7 7"/></svg>
         </button>
@@ -443,30 +474,62 @@
     </header>
 
     <div class="faq">
-      <details class="faq__item reveal" data-reveal>
-        <summary data-cursor="link">¿Hacen delivery y montaje?<i></i></summary>
-        <div><p>Sí. Llevamos, montamos y desmontamos la decoración. Trabajamos en Arraiján y alrededores de Panamá Oeste — escríbenos por WhatsApp para confirmar si llegamos a tu área.</p></div>
-      </details>
-      <details class="faq__item reveal" data-reveal data-delay="1">
-        <summary data-cursor="link">¿Con cuánta anticipación debo reservar?<i></i></summary>
-        <div><p>Mientras antes, mejor: las fechas de fin de semana se llenan rápido. Escríbenos con tu fecha y te confirmamos disponibilidad al momento.</p></div>
-      </details>
-      <details class="faq__item reveal" data-reveal data-delay="2">
-        <summary data-cursor="link">¿Puedo mandar una foto de la decoración que quiero?<i></i></summary>
-        <div><p>¡Claro! Usa el formulario de <a href="#propuesta" data-cursor="link">propuesta</a> para subir tus fotos de referencia, o mándalas directo por WhatsApp. Nos adaptamos a lo que tengas en mente.</p></div>
-      </details>
-      <details class="faq__item reveal" data-reveal data-delay="3">
-        <summary data-cursor="link">¿Los precios son fijos?<i></i></summary>
-        <div><p>Los precios que ves son paquetes base de referencia. El monto final puede variar según el tamaño del montaje, la temática, los accesorios y el lugar del evento. Te damos el precio cerrado en la cotización.</p></div>
-      </details>
-      <details class="faq__item reveal" data-reveal data-delay="4">
-        <summary data-cursor="link">¿Hacen temáticas personalizadas?<i></i></summary>
-        <div><p>Sí. Hemos hecho desde Bluey y dinosaurios hasta unicornios, Hot Wheels y gender reveals. Si tienes una temática en mente, la armamos.</p></div>
-      </details>
-      <details class="faq__item reveal" data-reveal data-delay="5">
-        <summary data-cursor="link">¿Solo decoración o también regalos?<i></i></summary>
-        <div><p>También armamos cajas de regalo temáticas con chocolates, ramos de rosas en cinta, girasoles y detalles con Ferrero Rocher. Perfectos para acompañar la sorpresa.</p></div>
-      </details>
+      <details class="faq__item reveal" data-reveal><summary>¿Hacen delivery y montaje?<i></i></summary><div><p>Sí. Llevamos, montamos y desmontamos la decoración. Trabajamos en Arraiján y alrededores de Panamá Oeste — escríbenos por WhatsApp para confirmar si llegamos a tu área.</p></div></details>
+      <details class="faq__item reveal" data-reveal data-delay="1"><summary>¿Con cuánta anticipación debo reservar?<i></i></summary><div><p>Mientras antes, mejor: las fechas de fin de semana se llenan rápido. Escríbenos con tu fecha y te confirmamos disponibilidad al momento.</p></div></details>
+      <details class="faq__item reveal" data-reveal data-delay="2"><summary>¿Puedo mandar una foto de la decoración que quiero?<i></i></summary><div><p>¡Claro! Usa el formulario de <a href="#propuesta">propuesta</a> para subir tus fotos de referencia, o mándalas directo por WhatsApp. Nos adaptamos a lo que tengas en mente.</p></div></details>
+      <details class="faq__item reveal" data-reveal data-delay="3"><summary>¿Los precios son fijos?<i></i></summary><div><p>Los precios que ves son paquetes base de referencia. El monto final puede variar según el tamaño del montaje, la temática, los accesorios y el lugar del evento. Te damos el precio cerrado en la cotización.</p></div></details>
+      <details class="faq__item reveal" data-reveal data-delay="4"><summary>¿Hacen temáticas personalizadas?<i></i></summary><div><p>Sí. Hemos hecho desde Bluey y dinosaurios hasta unicornios, Hot Wheels y gender reveals. Si tienes una temática en mente, la armamos.</p></div></details>
+      <details class="faq__item reveal" data-reveal data-delay="5"><summary>¿Solo decoración o también regalos?<i></i></summary><div><p>También armamos cajas de regalo temáticas con chocolates, ramos de rosas en cinta, girasoles y detalles con Ferrero Rocher. Perfectos para acompañar la sorpresa.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ UBICACIÓN ============ -->
+<section class="section" id="ubicacion">
+  <div class="wrap">
+    <header class="head">
+      <span class="eyebrow reveal" data-reveal>Dónde estamos</span>
+      <h2 class="h2 reveal" data-reveal data-delay="1">Cómo <em class="grad">llegar</em></h2>
+      <p class="head__lead reveal" data-reveal data-delay="2">Estamos en Arraiján. Toca el botón de tu app favorita y te lleva directo.</p>
+    </header>
+
+    <div class="loc">
+      <div class="loc__map reveal" data-reveal>
+        <iframe
+          title="Mapa de la ubicación de Rainbow Decorations en Arraiján"
+          src="https://maps.google.com/maps?q=8.9390414,-79.6420196&amp;z=15&amp;hl=es&amp;output=embed"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+
+      <div class="loc__info reveal" data-reveal data-delay="1">
+        <h3>Rainbow Decorations</h3>
+        <p class="loc__addr">
+          Vía Arraiján, La Polvareda<br>
+          Arraiján · Panamá Oeste, Panamá
+        </p>
+
+        <ul class="loc__meta">
+          <li><b>Horario</b><span id="locHorario"></span></li>
+          <li><b>Cobertura</b><span id="locZona"></span></li>
+        </ul>
+
+        <div class="loc__btns">
+          <a class="btn btn--waze" href="https://waze.com/ul?ll=8.9390414,-79.6420196&navigate=yes" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" d="M21 3 3 10.5l7.5 3L13.5 21z"/></svg>
+            Ir con Waze
+          </a>
+          <a class="btn btn--maps" href="https://www.google.com/maps/dir/?api=1&destination=8.9390414,-79.6420196" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6" fill="none" stroke="currentColor" stroke-width="1.9"/></svg>
+            Google Maps
+          </a>
+          <a class="btn btn--wa-solid" href="#" data-wa="Hola! 👋 Quiero coordinar la entrega/montaje. ¿Me confirman la dirección?">
+            <svg class="ico-wa" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
+            Escribir
+          </a>
+        </div>
+
+        <p class="loc__tip">Si vas a recoger un pedido, escríbenos antes para confirmar que esté listo.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -478,8 +541,8 @@
     <h2 class="reveal" data-reveal>¿Lista para tu <em class="grad">próxima fiesta</em>?</h2>
     <p class="reveal" data-reveal data-delay="1">Escríbenos por WhatsApp y cuéntanos qué celebras. Te respondemos con la cotización.</p>
     <div class="cta__btns reveal" data-reveal data-delay="2">
-      <a class="btn btn--grad btn--lg" href="#" data-wa="Hola Rainbow Decorations! 👋 Quiero cotizar una decoración para mi evento." data-cursor="link" data-confetti>Escribir por WhatsApp</a>
-      <a class="btn btn--ghost btn--lg" href="https://www.instagram.com/rainbowdecorations01/" target="_blank" rel="noopener" data-cursor="link">Ver Instagram</a>
+      <a class="btn btn--grad btn--lg" href="#" data-wa="Hola Rainbow Decorations! 👋 Quiero cotizar una decoración para mi evento." data-confetti>Escribir por WhatsApp</a>
+      <a class="btn btn--ghost btn--lg" href="https://www.instagram.com/rainbowdecorations01/" target="_blank" rel="noopener">Ver Instagram</a>
     </div>
   </div>
 </section>
@@ -491,25 +554,30 @@
   <div class="wrap foot__grid">
     <div class="foot__brand">
       <img src="assets/gallery/logo.jpg" alt="" width="52" height="52">
-      <div>
-        <b>Rainbow Decorations</b>
-        <span>Para todo tipo de eventos</span>
-      </div>
+      <div><b>Rainbow Decorations</b><span>Para todo tipo de eventos</span></div>
     </div>
 
     <div class="foot__col">
       <h4>Contacto</h4>
-      <a href="#" data-wa="Hola Rainbow Decorations! 👋" data-cursor="link">+507 6024-9687</a>
-      <a href="https://www.instagram.com/rainbowdecorations01/" target="_blank" rel="noopener" data-cursor="link">@rainbowdecorations01</a>
-      <p>Arraiján · Panamá Oeste</p>
+      <a href="#" data-wa="Hola Rainbow Decorations! 👋" id="footTel">+507 6024-9687</a>
+      <a href="https://www.instagram.com/rainbowdecorations01/" target="_blank" rel="noopener">@rainbowdecorations01</a>
+      <p>Vía Arraiján, La Polvareda<br>Arraiján · Panamá Oeste</p>
     </div>
 
     <div class="foot__col">
       <h4>Secciones</h4>
-      <a href="#servicios" data-cursor="link">Servicios</a>
-      <a href="#galeria" data-cursor="link">Galería</a>
-      <a href="#paquetes" data-cursor="link">Paquetes</a>
-      <a href="#propuesta" data-cursor="link">Enviar propuesta</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#galeria">Galería</a>
+      <a href="#paquetes">Paquetes</a>
+      <a href="#ubicacion">Cómo llegar</a>
+    </div>
+
+    <div class="foot__col">
+      <h4>Legal</h4>
+      <a href="privacidad.html">Política de privacidad</a>
+      <a href="terminos.html">Términos y condiciones</a>
+      <a href="privacidad.html#cookies">Uso de cookies</a>
+      <button class="foot__linkbtn" id="openCookies">Cambiar preferencias</button>
     </div>
   </div>
   <div class="foot__bar">
@@ -518,25 +586,38 @@
 </footer>
 
 <!-- ============ WHATSAPP FLOTANTE ============ -->
-<a class="wafab" href="#" data-wa="Hola Rainbow Decorations! 👋 Quiero información." aria-label="Escribir por WhatsApp" data-cursor="link">
+<a class="wafab" href="#" data-wa="Hola Rainbow Decorations! 👋 Quiero información." aria-label="Escribir por WhatsApp">
   <span class="wafab__pulse" aria-hidden="true"></span>
-  <svg viewBox="0 0 24 24" width="27" height="27" aria-hidden="true"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm5.52 13.97c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.14.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.2-.58.2-1.08.14-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
+  <svg class="ico-wa" viewBox="0 0 24 24" width="38" height="38" aria-hidden="true"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
   <span class="wafab__label">Escríbenos</span>
 </a>
 
 <!-- ============ LIGHTBOX ============ -->
 <div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Imagen ampliada" hidden>
-  <button class="lb__x" id="lbClose" aria-label="Cerrar" data-cursor="link">&times;</button>
-  <button class="lb__nav lb__nav--prev" id="lbPrev" aria-label="Anterior" data-cursor="link">&#8249;</button>
+  <button class="lb__x" id="lbClose" aria-label="Cerrar">&times;</button>
+  <button class="lb__nav lb__nav--prev" id="lbPrev" aria-label="Anterior">&#8249;</button>
   <figure class="lb__fig"><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
-  <button class="lb__nav lb__nav--next" id="lbNext" aria-label="Siguiente" data-cursor="link">&#8250;</button>
+  <button class="lb__nav lb__nav--next" id="lbNext" aria-label="Siguiente">&#8250;</button>
 </div>
 
-<!-- ============ TOAST ============ -->
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<!-- ============ COOKIES ============ -->
+<div class="cookies" id="cookies" role="dialog" aria-label="Preferencias de cookies" hidden>
+  <div class="cookies__in">
+    <div class="cookies__txt">
+      <b>Usamos almacenamiento en tu navegador</b>
+      <p>Solo para recordar tus preferencias (como este aviso) y para que las tipografías carguen bien. No usamos cookies de publicidad ni te rastreamos. Más detalles en la <a href="privacidad.html#cookies">política de cookies</a>.</p>
+    </div>
+    <div class="cookies__btns">
+      <button class="btn btn--ghost btn--sm" id="ckReject">Solo lo necesario</button>
+      <button class="btn btn--grad btn--sm" id="ckAccept">Aceptar</button>
+    </div>
+  </div>
+</div>
 
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
 
-<script src="assets/js/app.js"></script>
+<script src="assets/js/app.js?v=2"></script>
+<script src="assets/js/admin.js?v=2"></script>
 </body>
 </html>

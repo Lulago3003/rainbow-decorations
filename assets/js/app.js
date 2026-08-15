@@ -1,84 +1,260 @@
 /* =========================================================
    Rainbow Decorations — interacciones
    ---------------------------------------------------------
-   CONFIG: lo único que hay que tocar para cambiar datos.
+   El contenido editable vive en contenido.json y se aplica
+   aquí. El panel (#admin) usa las mismas funciones para la
+   vista previa en vivo.
    ========================================================= */
-
-const CONFIG = {
-  // Número de WhatsApp en formato internacional, sin + ni espacios.
-  phone: '50760249687',
-
-  // (Opcional) Correo de la dueña para recibir las propuestas CON las fotos
-  // adjuntas automáticamente. Ver README.md → "Activar el correo".
-  // Déjalo en '' y la web funciona solo con WhatsApp.
-  email: ''
-};
 
 const $  = (s, c = document) => c.querySelector(s);
 const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/* Contenido por defecto: si contenido.json falla, la página no se rompe. */
+const POR_DEFECTO = {
+  promo: { activa: false, texto: '', etiqueta: '', cta: '', mensaje: '' },
+  contacto: {
+    whatsapp: '50760249687',
+    whatsappVisible: '+507 6024-9687',
+    instagram: 'rainbowdecorations01',
+    horario: 'Escríbenos por WhatsApp',
+    zona: 'Arraiján y alrededores de Panamá Oeste',
+    pagos: ''
+  },
+  instagram: { titulo: '', bajada: '', publicaciones: [] },
+  paquetes: []
+};
+
+const RD = window.RD = { contenido: structuredClone(POR_DEFECTO) };
+
+const waURL = (texto) =>
+  `https://wa.me/${RD.contenido.contacto.whatsapp}?text=${encodeURIComponent(texto)}`;
+
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c =>
+  ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+/* ---------------------------------------------------------
+   APLICAR CONTENIDO
+--------------------------------------------------------- */
+function aplicarContenido(data) {
+  RD.contenido = {
+    ...structuredClone(POR_DEFECTO),
+    ...data,
+    contacto: { ...POR_DEFECTO.contacto, ...(data.contacto || {}) },
+    promo:    { ...POR_DEFECTO.promo,    ...(data.promo    || {}) },
+    instagram:{ ...POR_DEFECTO.instagram,...(data.instagram|| {}) }
+  };
+
+  pintarEnlacesWhatsapp();
+  pintarPromo();
+  pintarContacto();
+  pintarInstagram();
+  pintarPaquetes();
+}
+
+/* --- todos los enlaces de WhatsApp --- */
+function pintarEnlacesWhatsapp() {
+  $$('[data-wa]').forEach(el => {
+    el.setAttribute('href', waURL(el.dataset.wa));
+    el.setAttribute('target', '_blank');
+    el.setAttribute('rel', 'noopener');
+  });
+}
+
+/* --- barra de promoción --- */
+function pintarPromo() {
+  const barra = $('#promo');
+  if (!barra) return;
+
+  const p = RD.contenido.promo;
+  const cerrada = sessionStorage.getItem('rd_promo_cerrada') === '1';
+  const visible = !!(p.activa && p.texto && !cerrada);
+
+  barra.hidden = !visible;
+  if (visible) {
+    $('#promoTag').textContent = p.etiqueta || '';
+    $('#promoTag').hidden = !p.etiqueta;
+    $('#promoText').textContent = p.texto;
+    const cta = $('#promoCta');
+    if (p.cta) {
+      cta.hidden = false;
+      cta.textContent = p.cta;
+      cta.href = waURL(p.mensaje || p.texto);
+    } else {
+      cta.hidden = true;
+    }
+  }
+  medirPromo();
+}
+
+function medirPromo() {
+  const barra = $('#promo');
+  const alto = barra && !barra.hidden ? barra.offsetHeight : 0;
+  document.documentElement.style.setProperty('--promo-h', `${alto}px`);
+}
+
+/* --- datos de contacto repartidos por la página --- */
+function pintarContacto() {
+  const c = RD.contenido.contacto;
+
+  const tel = $('#footTel');
+  if (tel) tel.textContent = c.whatsappVisible || c.whatsapp;
+
+  const horario = $('#locHorario');
+  if (horario) horario.textContent = c.horario || '—';
+
+  const zona = $('#locZona');
+  if (zona) zona.textContent = c.zona || '—';
+
+  const pagoCaja = $('#payBox');
+  const pagoTexto = $('#payText');
+  if (pagoCaja && pagoTexto) {
+    pagoCaja.hidden = !c.pagos;
+    pagoTexto.textContent = c.pagos || '';
+  }
+
+  if (c.instagram) {
+    const url = `https://www.instagram.com/${c.instagram}/`;
+    $$('a[href*="instagram.com/"]').forEach(a => {
+      if (!a.href.includes('/p/')) a.href = url;
+    });
+    $$('a').forEach(a => {
+      if (a.textContent.trim().startsWith('@')) a.textContent = `@${c.instagram}`;
+    });
+  }
+}
+
+/* --- publicaciones de Instagram --- */
+const codigoInstagram = (url) => {
+  const m = String(url).match(/instagram\.com\/(?:[^/]+\/)?(?:p|reel|tv)\/([A-Za-z0-9_-]+)/);
+  return m ? m[1] : null;
+};
+
+function pintarInstagram() {
+  const seccion = $('#instagram');
+  const feed = $('#igFeed');
+  if (!seccion || !feed) return;
+
+  const ig = RD.contenido.instagram;
+  const posts = (ig.publicaciones || []).filter(p => codigoInstagram(p.url));
+
+  seccion.hidden = posts.length === 0;
+  if (!posts.length) { feed.innerHTML = ''; return; }
+
+  if (ig.titulo) $('#igTitulo').innerHTML = esc(ig.titulo).replace(/Instagram/i, '<em class="grad">Instagram</em>');
+  const bajada = $('#igBajada');
+  bajada.textContent = ig.bajada || '';
+  bajada.hidden = !ig.bajada;
+
+  const perfil = RD.contenido.contacto.instagram;
+  feed.innerHTML = posts.map(p => {
+    const code = codigoInstagram(p.url);
+    const enlace = `https://www.instagram.com/p/${code}/`;
+    return `
+      <article class="igcard">
+        <div class="igcard__frame">
+          <div class="igcard__fallback">
+            <svg viewBox="0 0 24 24" width="34" height="34" aria-hidden="true"><path fill="currentColor" d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16m0 5a4.84 4.84 0 1 0 0 9.68 4.84 4.84 0 0 0 0-9.68m0 7.98a3.14 3.14 0 1 1 0-6.28 3.14 3.14 0 0 1 0 6.28m6.16-8.17a1.13 1.13 0 1 1-2.26 0 1.13 1.13 0 0 1 2.26 0"/></svg>
+            <b>${esc(p.titulo || 'Publicación')}</b>
+            <span>Ábrela en Instagram para verla completa.</span>
+          </div>
+          <iframe src="https://www.instagram.com/p/${code}/embed/" title="${esc(p.titulo || 'Publicación de Instagram')}" loading="lazy" scrolling="no" allowtransparency="true"></iframe>
+        </div>
+        <div class="igcard__foot">
+          <b>${esc(p.titulo || `@${perfil}`)}</b>
+          <a href="${enlace}" target="_blank" rel="noopener">Ver en Instagram</a>
+        </div>
+      </article>`;
+  }).join('');
+}
+
+/* --- paquetes --- */
+function pintarPaquetes() {
+  const cont = $('#plans');
+  if (!cont) return;
+
+  const paquetes = RD.contenido.paquetes || [];
+  cont.innerHTML = paquetes.map((p, i) => {
+    const mensaje = `Hola! 👋 Me interesa el paquete *${p.nombre}${p.precio ? ` ($${p.precio})` : ''}*. ¿Me pueden dar más información?`;
+    return `
+      <article class="plan${p.destacado ? ' plan--star' : ''} reveal" data-reveal ${i ? `data-delay="${i}"` : ''}>
+        ${p.destacado ? '<span class="plan__tag">Más pedido</span>' : ''}
+        <div class="plan__top">
+          <h3>${esc(p.nombre)}</h3>
+          <p class="plan__for">${esc(p.para || '')}</p>
+          <div class="plan__price">
+            ${p.desde ? '<span class="from">desde</span>' : ''}
+            <span class="cur">$</span><b>${esc(p.precio)}</b>
+          </div>
+        </div>
+        <ul class="plan__list">
+          ${(p.incluye || []).map(x => `<li>${resaltar(x)}</li>`).join('')}
+        </ul>
+        <a class="btn ${p.destacado ? 'btn--grad' : 'btn--outline'}" href="#" data-wa="${esc(mensaje)}"${p.destacado ? ' data-confetti' : ''}>Reservar este</a>
+      </article>`;
+  }).join('');
+
+  // *texto* se muestra en negrita, igual que en WhatsApp
+  function resaltar(t) {
+    return esc(t).replace(/\*(.+?)\*/g, '<b>$1</b>')
+                 .replace(/^([^—·]+·\s*\$\d+)/, '<b>$1</b>');
+  }
+
+  pintarEnlacesWhatsapp();
+  engancharConfetti();
+  observarRevelados(cont);
+}
+
+/* ---------------------------------------------------------
+   CARGA INICIAL
+--------------------------------------------------------- */
+(async function cargar() {
+  // Borrador del panel: si existe, manda sobre el archivo publicado.
+  let borrador = null;
+  try { borrador = JSON.parse(localStorage.getItem('rd_borrador') || 'null'); } catch {}
+
+  let publicado = null;
+  try {
+    const res = await fetch('contenido.json', { cache: 'no-cache' });
+    if (res.ok) publicado = await res.json();
+  } catch {}
+
+  RD.publicado = publicado || structuredClone(POR_DEFECTO);
+  aplicarContenido(borrador || publicado || POR_DEFECTO);
+  RD.aplicar = aplicarContenido;
+  document.dispatchEvent(new CustomEvent('rd:listo'));
+})();
+
+addEventListener('resize', medirPromo);
+
+/* En móvil el botón de la promo está oculto: toda la barra abre el chat. */
+$('.promo__in')?.addEventListener('click', e => {
+  if (e.target.closest('.promo__cta')) return;
+  const cta = $('#promoCta');
+  if (cta && !cta.hidden && matchMedia('(max-width:700px)').matches) {
+    window.open(cta.href, '_blank', 'noopener');
+  }
+});
+
+$('#promoClose')?.addEventListener('click', () => {
+  sessionStorage.setItem('rd_promo_cerrada', '1');
+  $('#promo').hidden = true;
+  medirPromo();
+});
+
 /* ---------------------------------------------------------
    PRELOADER
 --------------------------------------------------------- */
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    $('#preloader')?.classList.add('is-done');
-    $('.hero')?.classList.add('is-in');
-    $('.wafab')?.classList.add('is-in');
-  }, reduced ? 0 : 550);
-});
-// Red de seguridad: si 'load' tarda demasiado, no dejamos la pantalla tapada.
-setTimeout(() => {
+function arrancar() {
   $('#preloader')?.classList.add('is-done');
   $('.hero')?.classList.add('is-in');
   $('.wafab')?.classList.add('is-in');
-}, 3200);
+}
+addEventListener('load', () => setTimeout(arrancar, reduced ? 0 : 550));
+setTimeout(arrancar, 3200);
 
 /* ---------------------------------------------------------
-   WHATSAPP — arma todos los enlaces data-wa
---------------------------------------------------------- */
-const waURL = (text) => `https://wa.me/${CONFIG.phone}?text=${encodeURIComponent(text)}`;
-
-$$('[data-wa]').forEach(el => {
-  el.setAttribute('href', waURL(el.dataset.wa));
-  el.setAttribute('target', '_blank');
-  el.setAttribute('rel', 'noopener');
-});
-
-/* ---------------------------------------------------------
-   CURSOR PERSONALIZADO
---------------------------------------------------------- */
-(() => {
-  const cur = $('#cursor');
-  if (!cur || reduced || matchMedia('(pointer: coarse)').matches) return;
-
-  const dot = $('.cursor__dot', cur);
-  const ring = $('.cursor__ring', cur);
-  let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
-
-  addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cur.classList.add('is-on');
-    dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
-
-    const t = e.target.closest('[data-cursor]');
-    cur.classList.toggle('is-link', t?.dataset.cursor === 'link');
-    cur.classList.toggle('is-zoom', t?.dataset.cursor === 'zoom');
-  }, { passive: true });
-
-  addEventListener('mouseleave', () => cur.classList.remove('is-on'));
-
-  (function loop() {
-    rx += (mx - rx) * 0.16;
-    ry += (my - ry) * 0.16;
-    ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
-    requestAnimationFrame(loop);
-  })();
-})();
-
-/* ---------------------------------------------------------
-   NAV — sticky, menú móvil, enlace activo, barra de progreso
+   NAV
 --------------------------------------------------------- */
 (() => {
   const nav = $('#nav');
@@ -88,60 +264,59 @@ $$('[data-wa]').forEach(el => {
   const menu = $('#navLinks');
 
   const onScroll = () => {
-    const y = scrollY;
-    nav.classList.toggle('is-stuck', y > 30);
+    nav.classList.toggle('is-stuck', scrollY > 30);
     const max = document.documentElement.scrollHeight - innerHeight;
-    bar.style.width = `${max > 0 ? (y / max) * 100 : 0}%`;
+    bar.style.width = `${max > 0 ? (scrollY / max) * 100 : 0}%`;
   };
   addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  // menú móvil
-  const closeMenu = () => {
+  const cerrar = () => {
     menu.classList.remove('is-open');
     burger.setAttribute('aria-expanded', 'false');
     document.body.classList.remove('is-locked');
   };
   burger?.addEventListener('click', () => {
-    const open = menu.classList.toggle('is-open');
-    burger.setAttribute('aria-expanded', String(open));
-    document.body.classList.toggle('is-locked', open);
+    const abierto = menu.classList.toggle('is-open');
+    burger.setAttribute('aria-expanded', String(abierto));
+    document.body.classList.toggle('is-locked', abierto);
   });
-  links.forEach(a => a.addEventListener('click', closeMenu));
-  addEventListener('keydown', e => e.key === 'Escape' && closeMenu());
+  links.forEach(a => a.addEventListener('click', cerrar));
+  addEventListener('keydown', e => e.key === 'Escape' && cerrar());
 
-  // enlace activo según la sección visible
-  const sections = links
+  const secciones = links
     .map(a => document.getElementById(a.getAttribute('href').slice(1)))
     .filter(Boolean);
 
-  const spy = new IntersectionObserver(entries => {
-    entries.forEach(en => {
+  const spy = new IntersectionObserver(entradas => {
+    entradas.forEach(en => {
       if (!en.isIntersecting) return;
       links.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === `#${en.target.id}`));
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
-  sections.forEach(s => spy.observe(s));
+  secciones.forEach(s => spy.observe(s));
 })();
 
 /* ---------------------------------------------------------
-   REVEAL AL HACER SCROLL
+   REVEAL
 --------------------------------------------------------- */
-(() => {
-  const items = $$('[data-reveal]');
+let ioReveal = null;
+function observarRevelados(raiz = document) {
+  const items = $$('[data-reveal]', raiz).filter(el => !el.classList.contains('is-in'));
   if (!items.length) return;
   if (reduced) return items.forEach(el => el.classList.add('is-in'));
 
-  const io = new IntersectionObserver((entries, obs) => {
-    entries.forEach(en => {
+  ioReveal ??= new IntersectionObserver((entradas, obs) => {
+    entradas.forEach(en => {
       if (!en.isIntersecting) return;
       en.target.classList.add('is-in');
       obs.unobserve(en.target);
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
 
-  items.forEach(el => io.observe(el));
-})();
+  items.forEach(el => ioReveal.observe(el));
+}
+observarRevelados();
 
 /* ---------------------------------------------------------
    CONTADORES
@@ -150,110 +325,75 @@ $$('[data-wa]').forEach(el => {
   const els = $$('[data-count]');
   if (!els.length) return;
 
-  const run = el => {
-    const end = +el.dataset.count;
-    if (reduced) return el.textContent = `+${end.toLocaleString('es-PA')}`;
+  const correr = el => {
+    const fin = +el.dataset.count;
+    if (reduced) return el.textContent = `+${fin.toLocaleString('es-PA')}`;
     const dur = 1500, t0 = performance.now();
-    const step = now => {
-      const p = Math.min((now - t0) / dur, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = `+${Math.round(end * eased).toLocaleString('es-PA')}`;
-      if (p < 1) requestAnimationFrame(step);
+    const paso = ahora => {
+      const p = Math.min((ahora - t0) / dur, 1);
+      el.textContent = `+${Math.round(fin * (1 - Math.pow(1 - p, 3))).toLocaleString('es-PA')}`;
+      if (p < 1) requestAnimationFrame(paso);
     };
-    requestAnimationFrame(step);
+    requestAnimationFrame(paso);
   };
 
-  const io = new IntersectionObserver((entries, obs) => {
-    entries.forEach(en => {
-      if (!en.isIntersecting) return;
-      run(en.target);
-      obs.unobserve(en.target);
-    });
+  const io = new IntersectionObserver((entradas, obs) => {
+    entradas.forEach(en => { if (en.isIntersecting) { correr(en.target); obs.unobserve(en.target); } });
   }, { threshold: 0.6 });
   els.forEach(el => io.observe(el));
 })();
 
 /* ---------------------------------------------------------
-   GLOBOS FLOTANTES DEL HERO
+   GLOBOS DEL HERO
 --------------------------------------------------------- */
 (() => {
-  const box = $('#heroBalloons');
-  if (!box || reduced) return;
+  const caja = $('#heroBalloons');
+  if (!caja || reduced) return;
 
-  const colors = ['#FF4E9B', '#FBBF24', '#3BB4F5', '#34D399', '#A855F7', '#FB8C4B'];
+  const colores = ['#FF4E9B', '#FBBF24', '#3BB4F5', '#34D399', '#A855F7', '#FB8C4B'];
   const n = innerWidth < 700 ? 7 : 13;
 
   for (let i = 0; i < n; i++) {
     const b = document.createElement('div');
     const size = 16 + Math.random() * 30;
-    const c = colors[i % colors.length];
+    const c = colores[i % colores.length];
     b.className = 'bal';
-    b.style.cssText = `
-      left:${Math.random() * 100}%;
-      width:${size}px;
+    b.style.cssText = `left:${Math.random() * 100}%;width:${size}px;
       animation-duration:${16 + Math.random() * 16}s;
       animation-delay:${-Math.random() * 26}s;
-      --spin:${(Math.random() * 30 - 15).toFixed(1)}deg;
-    `;
+      --spin:${(Math.random() * 30 - 15).toFixed(1)}deg;`;
     b.innerHTML = `<svg viewBox="0 0 40 58" width="100%" aria-hidden="true">
       <ellipse cx="20" cy="21" rx="18" ry="21" fill="${c}"/>
       <path d="M20 42c-3 4 3 6 0 10 -3 4 2 5 1 6" stroke="${c}" stroke-width="1.6" fill="none" opacity=".7"/>
-      <ellipse cx="13" cy="14" rx="5" ry="7" fill="#fff" opacity=".28"/>
-    </svg>`;
-    box.appendChild(b);
+      <ellipse cx="13" cy="14" rx="5" ry="7" fill="#fff" opacity=".28"/></svg>`;
+    caja.appendChild(b);
   }
 })();
 
 /* ---------------------------------------------------------
-   PARALLAX DEL STAGE DEL HERO
+   PARALLAX DEL HERO
 --------------------------------------------------------- */
 (() => {
   const stage = $('#heroStage');
   if (!stage || reduced || matchMedia('(pointer: coarse)').matches) return;
 
-  const layers = $$('[data-depth]', stage);
+  const capas = $$('[data-depth]', stage);
   let raf = null;
 
   stage.addEventListener('mousemove', e => {
     const r = stage.getBoundingClientRect();
     const px = (e.clientX - r.left) / r.width - 0.5;
     const py = (e.clientY - r.top) / r.height - 0.5;
-
     cancelAnimationFrame(raf);
     raf = requestAnimationFrame(() => {
-      layers.forEach(l => {
-        const d = +l.dataset.depth;
-        l.style.translate = `${-px * d}px ${-py * d}px`;
-      });
+      capas.forEach(l => l.style.translate = `${-px * +l.dataset.depth}px ${-py * +l.dataset.depth}px`);
     });
   });
-
-  stage.addEventListener('mouseleave', () => {
-    layers.forEach(l => l.style.translate = '0px 0px');
-  });
+  stage.addEventListener('mouseleave', () => capas.forEach(l => l.style.translate = '0px 0px'));
 })();
 
 /* ---------------------------------------------------------
-   TILT 3D + BRILLO EN LAS TARJETAS
---------------------------------------------------------- */
-(() => {
-  if (reduced || matchMedia('(pointer: coarse)').matches) return;
-
-  $$('[data-tilt]').forEach(card => {
-    card.addEventListener('mousemove', e => {
-      const r = card.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width;
-      const py = (e.clientY - r.top) / r.height;
-      card.style.transform = `perspective(900px) rotateX(${(0.5 - py) * 6}deg) rotateY(${(px - 0.5) * 6}deg) translateY(-5px)`;
-      card.style.setProperty('--mx', `${px * 100}%`);
-      card.style.setProperty('--my', `${py * 100}%`);
-    });
-    card.addEventListener('mouseleave', () => card.style.transform = '');
-  });
-})();
-
-/* ---------------------------------------------------------
-   GALERÍA — filtros
+   GALERÍA
 --------------------------------------------------------- */
 (() => {
   const chips = $$('.chip');
@@ -266,13 +406,12 @@ $$('[data-wa]').forEach(el => {
       c.classList.toggle('is-on', on);
       c.setAttribute('aria-selected', String(on));
     });
-
     const f = chip.dataset.filter;
     items.forEach(it => {
-      const show = f === 'all' || it.dataset.cat === f;
+      const mostrar = f === 'all' || it.dataset.cat === f;
       it.classList.add('is-fading');
       setTimeout(() => {
-        it.classList.toggle('is-hidden', !show);
+        it.classList.toggle('is-hidden', !mostrar);
         requestAnimationFrame(() => it.classList.remove('is-fading'));
       }, 180);
     });
@@ -288,64 +427,60 @@ $$('[data-wa]').forEach(el => {
   const cap = $('#lbCap');
   if (!lb) return;
 
-  let list = [], idx = 0, lastFocus = null;
+  let lista = [], idx = 0, ultimoFoco = null;
+  const visibles = () => $$('.gitem').filter(i => !i.classList.contains('is-hidden'));
 
-  const visible = () => $$('.gitem').filter(i => !i.classList.contains('is-hidden'));
-
-  const show = i => {
-    idx = (i + list.length) % list.length;
-    const it = list[idx];
-    img.src = it.src;
-    img.alt = it.alt;
-    cap.textContent = it.cap;
+  const mostrar = i => {
+    idx = (i + lista.length) % lista.length;
+    img.src = lista[idx].src;
+    img.alt = lista[idx].alt;
+    cap.textContent = lista[idx].cap;
   };
 
-  const open = (from) => {
-    list = visible().map(it => {
+  const abrir = desde => {
+    lista = visibles().map(it => {
       const im = $('img', it);
-      const t = $('figcaption b', it)?.textContent ?? '';
-      const s = $('figcaption span', it)?.textContent ?? '';
-      return { src: im.src, alt: im.alt, cap: `${t} — ${s}`, node: it };
+      return {
+        src: im.src, alt: im.alt,
+        cap: `${$('figcaption b', it)?.textContent ?? ''} — ${$('figcaption span', it)?.textContent ?? ''}`,
+        nodo: it
+      };
     });
-    const start = list.findIndex(l => l.node === from);
-    lastFocus = document.activeElement;
+    const inicio = lista.findIndex(l => l.nodo === desde);
+    ultimoFoco = document.activeElement;
     lb.hidden = false;
     document.body.classList.add('is-locked');
     requestAnimationFrame(() => lb.classList.add('is-open'));
-    show(start < 0 ? 0 : start);
+    mostrar(inicio < 0 ? 0 : inicio);
     $('#lbClose').focus();
   };
 
-  const close = () => {
+  const cerrar = () => {
     lb.classList.remove('is-open');
     document.body.classList.remove('is-locked');
     setTimeout(() => { lb.hidden = true; img.removeAttribute('src'); }, 350);
-    lastFocus?.focus();
+    ultimoFoco?.focus();
   };
 
-  $$('.gitem button').forEach(btn =>
-    btn.addEventListener('click', () => open(btn.closest('.gitem')))
-  );
-
-  $('#lbClose').addEventListener('click', close);
-  $('#lbPrev').addEventListener('click', () => show(idx - 1));
-  $('#lbNext').addEventListener('click', () => show(idx + 1));
-  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+  $$('.gitem button').forEach(b => b.addEventListener('click', () => abrir(b.closest('.gitem'))));
+  $('#lbClose').addEventListener('click', cerrar);
+  $('#lbPrev').addEventListener('click', () => mostrar(idx - 1));
+  $('#lbNext').addEventListener('click', () => mostrar(idx + 1));
+  lb.addEventListener('click', e => { if (e.target === lb) cerrar(); });
 
   addEventListener('keydown', e => {
     if (lb.hidden) return;
-    if (e.key === 'Escape') close();
-    if (e.key === 'ArrowLeft') show(idx - 1);
-    if (e.key === 'ArrowRight') show(idx + 1);
+    if (e.key === 'Escape') cerrar();
+    if (e.key === 'ArrowLeft') mostrar(idx - 1);
+    if (e.key === 'ArrowRight') mostrar(idx + 1);
   });
 
-  // swipe en móvil
   let x0 = null;
   lb.addEventListener('touchstart', e => x0 = e.touches[0].clientX, { passive: true });
   lb.addEventListener('touchend', e => {
     if (x0 === null) return;
     const dx = e.changedTouches[0].clientX - x0;
-    if (Math.abs(dx) > 55) show(idx + (dx < 0 ? 1 : -1));
+    if (Math.abs(dx) > 55) mostrar(idx + (dx < 0 ? 1 : -1));
     x0 = null;
   }, { passive: true });
 })();
@@ -362,6 +497,7 @@ function toast(msg, ms = 4200) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove('is-on'), ms);
 }
+window.rdToast = toast;
 
 /* ---------------------------------------------------------
    CONFETTI
@@ -370,39 +506,30 @@ const confetti = (() => {
   const cv = $('#confetti');
   if (!cv) return () => {};
   const ctx = cv.getContext('2d');
-  const colors = ['#FF4E9B', '#FBBF24', '#3BB4F5', '#34D399', '#A855F7', '#FB8C4B'];
-  let parts = [], raf = null;
+  const colores = ['#FF4E9B', '#FBBF24', '#3BB4F5', '#34D399', '#A855F7', '#FB8C4B'];
+  let partes = [], raf = null;
 
-  const size = () => {
+  const medir = () => {
     const d = devicePixelRatio || 1;
-    cv.width = innerWidth * d;
-    cv.height = innerHeight * d;
+    cv.width = innerWidth * d; cv.height = innerHeight * d;
     ctx.setTransform(d, 0, 0, d, 0, 0);
   };
-  size();
-  addEventListener('resize', size);
+  medir();
+  addEventListener('resize', medir);
 
   const tick = () => {
     ctx.clearRect(0, 0, innerWidth, innerHeight);
-    parts = parts.filter(p => p.life > 0);
-
-    parts.forEach(p => {
-      p.vy += 0.17;
-      p.x += p.vx;
-      p.y += p.vy;
-      p.rot += p.vr;
-      p.life--;
-
+    partes = partes.filter(p => p.vida > 0);
+    partes.forEach(p => {
+      p.vy += 0.17; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.vida--;
       ctx.save();
-      ctx.translate(p.x, p.y);
-      ctx.rotate(p.rot);
-      ctx.globalAlpha = Math.min(1, p.life / 40);
+      ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.globalAlpha = Math.min(1, p.vida / 40);
       ctx.fillStyle = p.c;
       ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
       ctx.restore();
     });
-
-    if (parts.length) raf = requestAnimationFrame(tick);
+    if (partes.length) raf = requestAnimationFrame(tick);
     else { ctx.clearRect(0, 0, innerWidth, innerHeight); raf = null; }
   };
 
@@ -411,54 +538,89 @@ const confetti = (() => {
     for (let i = 0; i < n; i++) {
       const a = Math.random() * Math.PI * 2;
       const sp = 4 + Math.random() * 9;
-      parts.push({
-        x, y,
-        vx: Math.cos(a) * sp,
-        vy: Math.sin(a) * sp - 5,
-        w: 6 + Math.random() * 7,
-        h: 4 + Math.random() * 5,
-        rot: Math.random() * Math.PI,
-        vr: (Math.random() - 0.5) * 0.3,
-        c: colors[(Math.random() * colors.length) | 0],
-        life: 90 + Math.random() * 50
+      partes.push({
+        x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 5,
+        w: 6 + Math.random() * 7, h: 4 + Math.random() * 5,
+        rot: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.3,
+        c: colores[(Math.random() * colores.length) | 0],
+        vida: 90 + Math.random() * 50
       });
     }
     if (!raf) raf = requestAnimationFrame(tick);
   };
 })();
+window.rdConfetti = confetti;
 
-$$('[data-confetti]').forEach(el => el.addEventListener('click', e => {
-  const r = el.getBoundingClientRect();
-  confetti(r.left + r.width / 2, r.top + r.height / 2, 80);
-}));
+function engancharConfetti() {
+  $$('[data-confetti]').forEach(el => {
+    if (el.dataset.confettiOn) return;
+    el.dataset.confettiOn = '1';
+    el.addEventListener('click', () => {
+      const r = el.getBoundingClientRect();
+      confetti(r.left + r.width / 2, r.top + r.height / 2, 80);
+    });
+  });
+}
+engancharConfetti();
+
+/* ---------------------------------------------------------
+   CONSULTA DE FECHA
+--------------------------------------------------------- */
+$('#dateForm')?.addEventListener('submit', e => {
+  e.preventDefault();
+  const v = $('#dc-date').value;
+  if (!v) return toast('Escoge una fecha primero.');
+  const txt = new Date(`${v}T12:00:00`)
+    .toLocaleDateString('es-PA', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  window.open(waURL(`Hola! 👋 ¿Tienen disponibilidad para el *${txt}*?`), '_blank', 'noopener');
+  confetti(innerWidth / 2, innerHeight * 0.5, 70);
+});
+
+/* ---------------------------------------------------------
+   COOKIES
+--------------------------------------------------------- */
+(() => {
+  const caja = $('#cookies');
+  if (!caja) return;
+  const fab = $('.wafab');
+
+  const abrir = () => { caja.hidden = false; fab?.classList.add('is-raised'); };
+  const cerrar = (valor) => {
+    localStorage.setItem('rd_cookies', valor);
+    caja.hidden = true;
+    fab?.classList.remove('is-raised');
+  };
+
+  if (!localStorage.getItem('rd_cookies')) setTimeout(abrir, 1400);
+
+  $('#ckAccept')?.addEventListener('click', () => cerrar('todas'));
+  $('#ckReject')?.addEventListener('click', () => cerrar('necesarias'));
+  $('#openCookies')?.addEventListener('click', abrir);
+})();
 
 /* ---------------------------------------------------------
    FORMULARIO DE PROPUESTA
 --------------------------------------------------------- */
 (() => {
-  const form  = $('#propForm');
+  const form   = $('#propForm');
   if (!form) return;
 
   const drop   = $('#drop');
   const input  = $('#f-files');
   const thumbs = $('#thumbs');
   const err    = $('#formErr');
-  const hint   = $('#formHint');
   const MAX    = 3;
   const MAX_MB = 5;
 
   let files = [];
 
-  if (CONFIG.email) hint.textContent = 'Se abrirá WhatsApp con tus datos listos y además enviaremos tus fotos por correo automáticamente.';
-
-  /* --- manejo de archivos --- */
-  const syncInput = () => {
+  const sincronizar = () => {
     const dt = new DataTransfer();
     files.forEach(f => dt.items.add(f));
     input.files = dt.files;
   };
 
-  const render = () => {
+  const pintar = () => {
     thumbs.innerHTML = '';
     files.forEach((f, i) => {
       const d = document.createElement('div');
@@ -467,55 +629,38 @@ $$('[data-confetti]').forEach(el => el.addEventListener('click', e => {
       d.innerHTML = `<img src="${url}" alt="Vista previa ${i + 1}">
                      <button type="button" aria-label="Quitar imagen ${i + 1}">&times;</button>`;
       $('img', d).addEventListener('load', () => URL.revokeObjectURL(url), { once: true });
-      $('button', d).addEventListener('click', () => {
-        files.splice(i, 1);
-        syncInput();
-        render();
-      });
+      $('button', d).addEventListener('click', () => { files.splice(i, 1); sincronizar(); pintar(); });
       thumbs.appendChild(d);
     });
   };
 
-  const add = list => {
-    const incoming = [...list].filter(f => f.type.startsWith('image/'));
-    if (!incoming.length) return toast('Solo se aceptan imágenes (JPG o PNG).');
-
-    for (const f of incoming) {
+  const agregar = lista => {
+    const entrantes = [...lista].filter(f => f.type.startsWith('image/'));
+    if (!entrantes.length) return toast('Solo se aceptan imágenes (JPG o PNG).');
+    for (const f of entrantes) {
       if (files.length >= MAX) { toast(`Máximo ${MAX} fotos.`); break; }
       if (f.size > MAX_MB * 1024 * 1024) { toast(`"${f.name}" pesa más de ${MAX_MB} MB.`); continue; }
       files.push(f);
     }
-    syncInput();
-    render();
+    sincronizar(); pintar();
   };
 
   drop.addEventListener('click', () => input.click());
   drop.addEventListener('keydown', e => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.click(); }
   });
-  input.addEventListener('change', () => {
-    const picked = [...input.files];
-    files = [];
-    add(picked);
-  });
+  input.addEventListener('change', () => { const p = [...input.files]; files = []; agregar(p); });
 
   ['dragenter', 'dragover'].forEach(ev =>
-    drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('is-over'); })
-  );
+    drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('is-over'); }));
   ['dragleave', 'drop'].forEach(ev =>
-    drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('is-over'); })
-  );
-  drop.addEventListener('drop', e => add(e.dataTransfer.files));
+    drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('is-over'); }));
+  drop.addEventListener('drop', e => agregar(e.dataTransfer.files));
 
-  /* --- copiar la primera foto al portapapeles (para pegarla en WhatsApp) ---
-     Es un extra: si el navegador lo bloquea o se queda colgado, seguimos
-     igual. Por eso va con límite de tiempo y nunca frena el envío. */
-  const copyFirstImage = (file) => {
-    if (!file || !navigator.clipboard?.write || !window.ClipboardItem) {
-      return Promise.resolve(false);
-    }
-
-    const attempt = (async () => {
+  /* Copiar la primera foto al portapapeles: es un extra, nunca frena el envío. */
+  const copiarFoto = (file) => {
+    if (!file || !navigator.clipboard?.write || !window.ClipboardItem) return Promise.resolve(false);
+    const intento = (async () => {
       const bmp = await createImageBitmap(file);
       const cv = document.createElement('canvas');
       cv.width = bmp.width; cv.height = bmp.height;
@@ -525,133 +670,81 @@ $$('[data-confetti]').forEach(el => el.addEventListener('click', e => {
       await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
       return true;
     })().catch(() => false);
-
-    const timeout = new Promise(r => setTimeout(() => r(false), 1200));
-    return Promise.race([attempt, timeout]);
+    return Promise.race([intento, new Promise(r => setTimeout(() => r(false), 1200))]);
   };
 
-  /* --- envío por correo con adjuntos (FormSubmit) --- */
-  const sendEmail = (data) => new Promise(resolve => {
-    if (!CONFIG.email) return resolve(false);
-
-    let frame = $('#mailFrame');
-    if (!frame) {
-      frame = document.createElement('iframe');
-      frame.id = 'mailFrame';
-      frame.name = 'mailFrame';
-      frame.style.display = 'none';
-      document.body.appendChild(frame);
-    }
-
-    const tmp = document.createElement('form');
-    tmp.action = `https://formsubmit.co/${CONFIG.email}`;
-    tmp.method = 'POST';
-    tmp.enctype = 'multipart/form-data';
-    tmp.target = 'mailFrame';
-    tmp.style.display = 'none';
-
-    const hidden = {
-      ...data,
-      _subject: `Nueva propuesta desde la web — ${data.nombre}`,
-      _captcha: 'false',
-      _template: 'table'
-    };
-    Object.entries(hidden).forEach(([k, v]) => {
-      const i = document.createElement('input');
-      i.type = 'hidden'; i.name = k; i.value = v ?? '';
-      tmp.appendChild(i);
-    });
-
-    // movemos el input real para que viajen los archivos, y luego lo devolvemos
-    const home = input.parentNode;
-    const mark = document.createComment('files');
-    home.insertBefore(mark, input);
-    tmp.appendChild(input);
-
-    document.body.appendChild(tmp);
-    tmp.submit();
-
-    setTimeout(() => {
-      home.insertBefore(input, mark);
-      mark.remove();
-      tmp.remove();
-      resolve(true);
-    }, 400);
-  });
-
-  /* --- submit --- */
   form.addEventListener('submit', e => {
     e.preventDefault();
     err.hidden = true;
 
-    const data = {
-      nombre:       $('#f-name').value.trim(),
-      whatsapp:     $('#f-phone').value.trim(),
-      fecha:        $('#f-date').value,
-      tipo:         $('#f-type').value,
-      lugar:        $('#f-place').value.trim(),
-      presupuesto:  $('#f-budget').value.trim(),
-      idea:         $('#f-msg').value.trim()
+    const d = {
+      nombre:      $('#f-name').value.trim(),
+      whatsapp:    $('#f-phone').value.trim(),
+      fecha:       $('#f-date').value,
+      tipo:        $('#f-type').value,
+      lugar:       $('#f-place').value.trim(),
+      presupuesto: $('#f-budget').value.trim(),
+      idea:        $('#f-msg').value.trim()
     };
 
-    if (!data.nombre || !data.whatsapp || !data.idea) {
+    if (!d.nombre || !d.whatsapp || !d.idea) {
       err.textContent = 'Completa tu nombre, tu WhatsApp y cuéntanos tu idea.';
       err.hidden = false;
-      (!data.nombre ? $('#f-name') : !data.whatsapp ? $('#f-phone') : $('#f-msg')).focus();
+      (!d.nombre ? $('#f-name') : !d.whatsapp ? $('#f-phone') : $('#f-msg')).focus();
+      return;
+    }
+    if (!$('#f-consent').checked) {
+      err.textContent = 'Marca la casilla para que podamos responderte.';
+      err.hidden = false;
+      $('#f-consent').focus();
       return;
     }
 
-    const fechaTxt = data.fecha
-      ? new Date(`${data.fecha}T12:00:00`).toLocaleDateString('es-PA', { day: 'numeric', month: 'long', year: 'numeric' })
+    const fechaTxt = d.fecha
+      ? new Date(`${d.fecha}T12:00:00`).toLocaleDateString('es-PA', { day: 'numeric', month: 'long', year: 'numeric' })
       : 'por definir';
 
     const msg = [
       '*Nueva propuesta desde la web* 🎉',
       '',
-      `*Nombre:* ${data.nombre}`,
-      `*WhatsApp:* ${data.whatsapp}`,
-      `*Tipo de evento:* ${data.tipo}`,
+      `*Nombre:* ${d.nombre}`,
+      `*WhatsApp:* ${d.whatsapp}`,
+      `*Tipo de evento:* ${d.tipo}`,
       `*Fecha:* ${fechaTxt}`,
-      data.lugar ? `*Lugar:* ${data.lugar}` : null,
-      data.presupuesto ? `*Presupuesto:* ${data.presupuesto}` : null,
+      d.lugar ? `*Lugar:* ${d.lugar}` : null,
+      d.presupuesto ? `*Presupuesto:* ${d.presupuesto}` : null,
       '',
       '*La idea:*',
-      data.idea,
+      d.idea,
       '',
       files.length
         ? `📎 Te adjunto ${files.length === 1 ? 'una foto' : `${files.length} fotos`} de referencia.`
         : null
-    ].filter(line => line !== null).join('\n');
+    ].filter(l => l !== null).join('\n');
 
-    // El correo se dispara solo (va a un iframe oculto, no bloquea nada).
-    sendEmail(data);
+    const n = files.length;
+    const primera = files[0];
 
-    // WhatsApp se abre YA, dentro del gesto del usuario: si esperáramos a
-    // una promesa, el navegador trataría la ventana como popup y la bloquearía.
-    const nFiles = files.length;
-    const firstFile = files[0];
+    // WhatsApp se abre dentro del gesto del usuario para que no lo bloqueen.
     window.open(waURL(msg), '_blank', 'noopener');
 
     confetti(innerWidth / 2, innerHeight * 0.42, 130);
-    toast(nFiles
+    toast(n
       ? '¡Listo! Se abrió WhatsApp con tus datos. Adjunta tus fotos en el chat. 📎'
       : '¡Listo! Se abrió WhatsApp con tu propuesta. 🎉');
 
-    // Lo del portapapeles es un plus: si funciona, mejoramos el aviso.
-    copyFirstImage(firstFile).then(copied => {
-      if (copied) {
-        toast('¡Listo! Se abrió WhatsApp y tu primera foto quedó copiada — solo pégala en el chat. 📋', 6500);
-      }
+    copiarFoto(primera).then(ok => {
+      if (ok) toast('¡Listo! Se abrió WhatsApp y tu primera foto quedó copiada — solo pégala en el chat. 📋', 6500);
     });
 
     form.reset();
     files = [];
-    syncInput();
-    render();
+    sincronizar();
+    pintar();
   });
 })();
 
 /* ---------------------------------------------------------
-   AÑO DEL FOOTER
+   AÑO
 --------------------------------------------------------- */
 $('#year').textContent = new Date().getFullYear();

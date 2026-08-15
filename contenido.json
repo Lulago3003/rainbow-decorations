@@ -1,0 +1,77 @@
+{
+  "_ayuda": "Este archivo guarda el contenido que la dueña puede editar desde el panel (agrega #admin al final de la dirección de la página). No hace falta tocarlo a mano.",
+
+  "promo": {
+    "activa": true,
+    "texto": "Aparta tu fecha con anticipación — los fines de semana se llenan rápido",
+    "etiqueta": "Reservas abiertas",
+    "cta": "Consultar disponibilidad",
+    "mensaje": "Hola! 👋 Quiero consultar disponibilidad para mi fecha."
+  },
+
+  "contacto": {
+    "whatsapp": "50760249687",
+    "whatsappVisible": "+507 6024-9687",
+    "instagram": "rainbowdecorations01",
+    "horario": "Lunes a domingo · 8:00 a.m. a 8:00 p.m.",
+    "zona": "Arraiján y alrededores de Panamá Oeste",
+    "pagos": "Escríbenos por WhatsApp para coordinar la forma de pago y el abono de reserva."
+  },
+
+  "instagram": {
+    "titulo": "Lo último de nuestro Instagram",
+    "bajada": "Publicaciones recién salidas del horno. Toca cualquiera para verla completa.",
+    "publicaciones": [
+      { "url": "https://www.instagram.com/p/DV_NFWRjqir/", "titulo": "Montaje temática Bluey" },
+      { "url": "https://www.instagram.com/p/DV8yfRDDonr/", "titulo": "Catálogo de decoraciones" },
+      { "url": "https://www.instagram.com/p/DVmonvwDo0e/", "titulo": "Baby shower Boy or Girl" }
+    ]
+  },
+
+  "paquetes": [
+    {
+      "nombre": "Decoración Esencial",
+      "para": "Ideal para cumpleaños en casa",
+      "precio": "85",
+      "desde": false,
+      "destacado": false,
+      "incluye": [
+        "Mampara personalizada con nombre",
+        "Globos en 3 tonos",
+        "Imagen de la temática",
+        "Mesas, escalera y grama",
+        "Brillo para globos",
+        "Montaje y desmontaje"
+      ]
+    },
+    {
+      "nombre": "Decoración Premium",
+      "para": "Para eventos que quieren impactar",
+      "precio": "125",
+      "desde": false,
+      "destacado": true,
+      "incluye": [
+        "Mampara personalizada con nombre en foamboard",
+        "Globos en 3 tonos",
+        "Imagen y accesorios de la temática",
+        "2 mamparas, mesas, escalera y grama",
+        "Brillo para globos",
+        "Montaje y desmontaje"
+      ]
+    },
+    {
+      "nombre": "Alquiler de mobiliario",
+      "para": "Si ya tienes tu decoración",
+      "precio": "18",
+      "desde": true,
+      "destacado": false,
+      "incluye": [
+        "Combo 1 · $18 — Aro + grama + 3 mesas",
+        "Combo 2 · $18 — Marco ajustable 3×3 + 1 mesa",
+        "Combo 2 con grama — $22",
+        "Combo 2 con 3 mesas y grama — $25",
+        "Varios modelos de mesas disponibles"
+      ]
+    }
+  ]
+}
