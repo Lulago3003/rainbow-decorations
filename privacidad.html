@@ -7,12 +7,21 @@
 <meta name="description" content="Cómo Rainbow Decorations trata los datos personales que nos envías, conforme a la Ley 81 de 2019 de Panamá.">
 <meta name="robots" content="index, follow">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://lulago3003.github.io/rainbow-decorations/privacidad.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Rainbow Decorations">
+<meta property="og:url" content="https://lulago3003.github.io/rainbow-decorations/privacidad.html">
+<meta property="og:title" content="Política de privacidad — Rainbow Decorations">
+<meta property="og:description" content="Cómo tratamos tus datos personales, conforme a la Ley 81 de 2019 de Panamá.">
+<meta property="og:image" content="https://lulago3003.github.io/rainbow-decorations/assets/gallery/g03.jpg">
+<meta property="og:locale" content="es_PA">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=4">
+<link rel="stylesheet" href="assets/css/style.css?v=5">
 </head>
 <body>
+<a class="skip" href="#top">Saltar al contenido</a>
 
 <header class="nav is-stuck">
   <a class="nav__brand" href="index.html">
@@ -22,7 +31,7 @@
   <a class="btn btn--sm btn--grad" style="margin-left:auto" href="index.html">Volver a la página</a>
 </header>
 
-<main class="legal">
+<main class="legal" id="top">
   <div class="wrap wrap--narrow">
     <a class="legal__back" href="index.html"><span aria-hidden="true">←</span> Inicio</a>
 
@@ -167,6 +176,17 @@
   </div>
 </footer>
 
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+(function () {
+  var b = document.getElementById('toTop');
+  if (!b) return;
+  b.hidden = false;
+  var ver = function () { b.classList.toggle('is-on', scrollY > innerHeight * 0.9); };
+  addEventListener('scroll', ver, { passive: true }); ver();
+  b.addEventListener('click', function () { scrollTo({ top: 0, behavior: 'smooth' }); });
+})();
+</script>
+<button class="totop" id="toTop" aria-label="Volver arriba" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M12 19V5m-7 7 7-7 7 7"/></svg></button>
 </body>
 </html>

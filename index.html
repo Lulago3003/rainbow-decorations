@@ -9,18 +9,22 @@
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/gallery/logo.jpg">
 <link rel="canonical" href="https://lulago3003.github.io/rainbow-decorations/">
-
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Rainbow Decorations">
+<meta property="og:url" content="https://lulago3003.github.io/rainbow-decorations/">
 <meta property="og:title" content="Rainbow Decorations — Creando momentos inolvidables">
 <meta property="og:description" content="Decoración de fiestas, globos y bouquets en Arraiján, Panamá Oeste. Pide tu cotización por WhatsApp.">
-<meta property="og:image" content="assets/gallery/g03.jpg">
+<meta property="og:image" content="https://lulago3003.github.io/rainbow-decorations/assets/gallery/g03.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:locale" content="es_PA">
 <meta name="twitter:card" content="summary_large_image">
+
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=4">
+<link rel="stylesheet" href="assets/css/style.css?v=5">
 <script>document.documentElement.classList.add('js');</script>
 
 <script type="application/ld+json">
@@ -48,6 +52,7 @@
 </script>
 </head>
 <body>
+<a class="skip" href="#top">Saltar al contenido</a>
 
 <!-- ============ PRELOADER ============ -->
 <div class="preloader" id="preloader" aria-hidden="true">
@@ -625,6 +630,7 @@
 <!-- ============ LIGHTBOX ============ -->
 <div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Imagen ampliada" hidden>
   <button class="lb__x" id="lbClose" aria-label="Cerrar">&times;</button>
+  <span class="lb__count" id="lbCount" aria-live="polite"></span>
   <button class="lb__nav lb__nav--prev" id="lbPrev" aria-label="Anterior">&#8249;</button>
   <figure class="lb__fig"><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
   <button class="lb__nav lb__nav--next" id="lbNext" aria-label="Siguiente">&#8250;</button>
@@ -647,7 +653,9 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
 
-<script src="assets/js/app.js?v=4"></script>
-<script src="assets/js/admin.js?v=4"></script>
+<button class="totop" id="toTop" aria-label="Volver arriba" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M12 19V5m-7 7 7-7 7 7"/></svg></button>
+
+<script src="assets/js/app.js?v=5"></script>
+<script src="assets/js/admin.js?v=5"></script>
 </body>
 </html>

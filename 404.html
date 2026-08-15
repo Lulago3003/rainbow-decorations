@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Esta página se nos escapó — Rainbow Decorations</title>
+<meta name="robots" content="noindex, follow">
+<link rel="icon" href="/rainbow-decorations/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/rainbow-decorations/assets/css/style.css?v=5">
+<style>
+  .oops{min-height:100svh;display:grid;place-items:center;text-align:center;padding:40px 20px;position:relative;overflow:hidden}
+  .oops__in{position:relative;z-index:1;max-width:560px}
+  .oops__num{
+    font-family:"Bricolage Grotesque",sans-serif;font-weight:800;line-height:.9;
+    font-size:clamp(88px,20vw,190px);letter-spacing:-.06em;
+    background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .oops h1{font-size:clamp(25px,4vw,38px);letter-spacing:-.035em;margin-top:10px}
+  .oops p{color:var(--ink-2);margin:16px auto 0;max-width:42ch;font-size:16px}
+  .oops__btns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:32px}
+  .oops__balloons{position:absolute;inset:0;pointer-events:none;filter:blur(70px);opacity:.55}
+  .oops__balloons i{position:absolute;border-radius:50%;display:block}
+  .oops__balloons i:nth-child(1){width:40vw;height:40vw;left:-4%;top:-6%;background:radial-gradient(circle,rgba(255,78,155,.85),transparent 68%)}
+  .oops__balloons i:nth-child(2){width:36vw;height:36vw;right:-4%;bottom:-8%;background:radial-gradient(circle,rgba(59,180,245,.8),transparent 68%)}
+  .oops__balloons i:nth-child(3){width:30vw;height:30vw;left:34%;bottom:-12%;background:radial-gradient(circle,rgba(251,191,36,.7),transparent 68%)}
+</style>
+</head>
+<body>
+
+<main class="oops" id="top">
+  <div class="oops__balloons" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="oops__in">
+    <div class="oops__num" aria-hidden="true">404</div>
+    <h1>Se nos <em class="grad">escapó</em> esta página</h1>
+    <p>Como un globo que se suelta. Pero tranquila, todo lo bueno sigue en su sitio.</p>
+    <div class="oops__btns">
+      <a class="btn btn--grad btn--lg" href="/rainbow-decorations/">Ir al inicio</a>
+      <a class="btn btn--ghost btn--lg" href="/rainbow-decorations/alquiler.html">Sillas y mesas</a>
+      <a class="btn btn--wa-solid btn--lg" href="https://wa.me/50760249687?text=Hola!%20%F0%9F%91%8B%20Quiero%20informaci%C3%B3n." target="_blank" rel="noopener">Escribir por WhatsApp</a>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

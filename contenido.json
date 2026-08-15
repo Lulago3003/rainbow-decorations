@@ -1,6 +1,5 @@
 {
   "_ayuda": "Este archivo guarda el contenido que la dueña puede editar desde el panel (agrega #admin al final de la dirección de la página). No hace falta tocarlo a mano.",
-
   "promo": {
     "activa": true,
     "texto": "Aparta tu fecha con anticipación — los fines de semana se llenan rápido",
@@ -8,7 +7,6 @@
     "cta": "Consultar disponibilidad",
     "mensaje": "Hola! 👋 Quiero consultar disponibilidad para mi fecha."
   },
-
   "contacto": {
     "whatsapp": "50760249687",
     "whatsappVisible": "+507 6024-9687",
@@ -17,7 +15,6 @@
     "zona": "Arraiján y alrededores de Panamá Oeste",
     "pagos": "Escríbenos por WhatsApp para coordinar la forma de pago y el abono de reserva."
   },
-
   "alquiler": {
     "whatsapp": "50769140677",
     "whatsappVisible": "+507 6914-0677",
@@ -30,7 +27,8 @@
         "precio": "0.50",
         "unidad": "por silla",
         "img": "assets/alquiler/silla.jpg",
-        "foto": true
+        "foto": true,
+        "capacidad": 1
       },
       {
         "nombre": "Mesa plástica cuadrada",
@@ -39,7 +37,8 @@
         "precio": "2",
         "unidad": "por mesa",
         "img": "assets/alquiler/mesa-73.jpg",
-        "foto": false
+        "foto": false,
+        "capacidad": 4
       },
       {
         "nombre": "Mesa plegable rectangular",
@@ -48,7 +47,8 @@
         "precio": "5",
         "unidad": "por mesa",
         "img": "assets/alquiler/mesa-120.jpg",
-        "foto": false
+        "foto": false,
+        "capacidad": 6
       },
       {
         "nombre": "Mesa plegable grande",
@@ -57,21 +57,29 @@
         "precio": "7",
         "unidad": "por mesa",
         "img": "assets/alquiler/mesa-180.jpg",
-        "foto": false
+        "foto": false,
+        "capacidad": 8
       }
     ]
   },
-
   "instagram": {
     "titulo": "Lo último de nuestro Instagram",
     "bajada": "Publicaciones recién salidas del horno. Toca cualquiera para verla completa.",
     "publicaciones": [
-      { "url": "https://www.instagram.com/p/DV_NFWRjqir/", "titulo": "Montaje temática Bluey" },
-      { "url": "https://www.instagram.com/p/DV8yfRDDonr/", "titulo": "Catálogo de decoraciones" },
-      { "url": "https://www.instagram.com/p/DVmonvwDo0e/", "titulo": "Baby shower Boy or Girl" }
+      {
+        "url": "https://www.instagram.com/p/DV_NFWRjqir/",
+        "titulo": "Montaje temática Bluey"
+      },
+      {
+        "url": "https://www.instagram.com/p/DV8yfRDDonr/",
+        "titulo": "Catálogo de decoraciones"
+      },
+      {
+        "url": "https://www.instagram.com/p/DVmonvwDo0e/",
+        "titulo": "Baby shower Boy or Girl"
+      }
     ]
   },
-
   "paquetes": [
     {
       "nombre": "Decoración Esencial",

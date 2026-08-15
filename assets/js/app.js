@@ -117,6 +117,96 @@ function pintarAlquiler() {
 
   pintarEnlacesWhatsapp();
   observarRevelados(rejilla);
+  pintarCotizador();
+}
+
+/* ---------------------------------------------------------
+   COTIZADOR DE SILLAS Y MESAS
+--------------------------------------------------------- */
+const dinero = n => `$${n.toFixed(2)}`;
+
+function pintarCotizador() {
+  const lista = $('#calcList');
+  if (!lista) return;
+
+  const articulos = (RD.contenido.alquiler.articulos || [])
+    .map(a => ({ ...a, valor: parseFloat(String(a.precio).replace(',', '.')) || 0 }));
+
+  const cant = new Map();   // nombre -> cantidad
+
+  lista.innerHTML = articulos.map((a, i) => `
+    <div class="calc__row" data-i="${i}">
+      <div class="calc__info">
+        <b>${esc(a.nombre)}</b>
+        <span>${a.medida ? `${esc(a.medida)} · ` : ''}${dinero(a.valor)} ${esc(a.unidad || '')}</span>
+      </div>
+      <div class="calc__stepper">
+        <button type="button" data-paso="-1" aria-label="Quitar uno de ${esc(a.nombre)}">−</button>
+        <input type="number" min="0" max="999" step="1" value="0" inputmode="numeric"
+               aria-label="Cantidad de ${esc(a.nombre)}">
+        <button type="button" data-paso="1" aria-label="Agregar uno de ${esc(a.nombre)}">+</button>
+      </div>
+      <b class="calc__sub">$0.00</b>
+    </div>`).join('');
+
+  const filas = $$('.calc__row', lista);
+
+  const recalcular = () => {
+    let total = 0;
+    const detalle = [];
+
+    filas.forEach(fila => {
+      const a = articulos[+fila.dataset.i];
+      const n = Math.max(0, parseInt($('input', fila).value, 10) || 0);
+      const sub = n * a.valor;
+      total += sub;
+      cant.set(a.nombre, n);
+      $('.calc__sub', fila).textContent = dinero(sub);
+      fila.classList.toggle('is-on', n > 0);
+      // solo ponemos la medida si de verdad lo es ("73 × 73 cm", no "Apilable")
+      const medida = /\d/.test(a.medida || '') ? ` (${a.medida})` : '';
+      if (n > 0) detalle.push(`• ${n} × ${a.nombre}${medida} — ${dinero(sub)}`);
+    });
+
+    $('#calcTotal').textContent = dinero(total);
+
+    const boton = $('#calcEnviar');
+    boton.dataset.wa = detalle.length
+      ? ['*Pedido de sillas y mesas* 🪑', '', ...detalle, '', `*Total aproximado:* ${dinero(total)}`,
+         '', '¿Me confirman disponibilidad?'].join('\n')
+      : 'Hola! 👋 Quiero alquilar sillas y mesas.';
+    pintarEnlacesWhatsapp();
+  };
+
+  filas.forEach(fila => {
+    const campo = $('input', fila);
+    $$('button', fila).forEach(b => b.addEventListener('click', () => {
+      campo.value = Math.max(0, (parseInt(campo.value, 10) || 0) + (+b.dataset.paso));
+      recalcular();
+    }));
+    campo.addEventListener('input', recalcular);
+  });
+
+  $('#calcSugerir')?.addEventListener('click', () => {
+    const invitados = Math.max(0, parseInt($('#calcInv').value, 10) || 0);
+    if (!invitados) return toast('Escribe cuántos invitados esperas.');
+
+    // Una silla por invitado y la mesa más grande que tengamos para acomodarlos.
+    const mesas = articulos.filter(a => a.capacidad > 1);
+    const mayor = mesas.sort((x, y) => y.capacidad - x.capacidad)[0];
+
+    filas.forEach(fila => {
+      const a = articulos[+fila.dataset.i];
+      let n = 0;
+      if (a.capacidad === 1) n = invitados;
+      else if (mayor && a.nombre === mayor.nombre) n = Math.ceil(invitados / a.capacidad);
+      $('input', fila).value = n;
+    });
+    recalcular();
+    toast(`Listo: sugerencia para ${invitados} invitados. Ajusta lo que quieras.`);
+  });
+
+  recalcular();
 }
 
 /* --- barra de promoción --- */
@@ -209,14 +299,14 @@ function pintarInstagram() {
     const code = codigoInstagram(p.url);
     const enlace = `https://www.instagram.com/p/${code}/`;
     return `
-      <article class="igcard">
+      <article class="igcard" data-ig-code="${esc(code)}" data-ig-titulo="${esc(p.titulo || '')}">
         <div class="igcard__frame">
           <div class="igcard__fallback">
             <svg viewBox="0 0 24 24" width="34" height="34" aria-hidden="true"><path fill="currentColor" d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16m0 5a4.84 4.84 0 1 0 0 9.68 4.84 4.84 0 0 0 0-9.68m0 7.98a3.14 3.14 0 1 1 0-6.28 3.14 3.14 0 0 1 0 6.28m6.16-8.17a1.13 1.13 0 1 1-2.26 0 1.13 1.13 0 0 1 2.26 0"/></svg>
             <b>${esc(p.titulo || 'Publicación')}</b>
-            <span>Ábrela en Instagram para verla completa.</span>
+            <span>Al cargarla, Instagram puede poner sus propias cookies.</span>
+            <button class="btn btn--grad btn--sm" type="button" data-ig-cargar>Ver la publicación</button>
           </div>
-          <iframe src="https://www.instagram.com/p/${code}/embed/" title="${esc(p.titulo || 'Publicación de Instagram')}" loading="lazy" scrolling="no" allowtransparency="true"></iframe>
         </div>
         <div class="igcard__foot">
           <b>${esc(p.titulo || `@${perfil}`)}</b>
@@ -224,7 +314,35 @@ function pintarInstagram() {
         </div>
       </article>`;
   }).join('');
+
+  $$('[data-ig-cargar]', feed).forEach(b =>
+    b.addEventListener('click', () => cargarEmbed(b.closest('.igcard'))));
+
+  // Si ya aceptó cookies, no la hacemos pedir permiso otra vez.
+  if (localStorage.getItem('rd_cookies') === 'todas') cargarEmbedsInstagram();
 }
+
+/* Los embeds de Instagram traen contenido de Meta, así que solo se cargan
+   cuando la persona lo pide o ya aceptó las cookies. También evita bajar
+   tres iframes pesados de entrada. */
+function cargarEmbed(card) {
+  if (!card || card.dataset.igListo) return;
+  card.dataset.igListo = '1';
+
+  const code = card.dataset.igCode;
+  const marco = $('.igcard__frame', card);
+  const iframe = document.createElement('iframe');
+  iframe.src = `https://www.instagram.com/p/${code}/embed/`;
+  iframe.title = card.dataset.igTitulo || 'Publicación de Instagram';
+  iframe.loading = 'lazy';
+  iframe.scrolling = 'no';
+  marco.appendChild(iframe);
+}
+
+function cargarEmbedsInstagram() {
+  $$('.igcard').forEach(cargarEmbed);
+}
+window.rdCargarInstagram = cargarEmbedsInstagram;
 
 /* --- paquetes --- */
 function pintarPaquetes() {
@@ -488,11 +606,20 @@ observarRevelados();
   let lista = [], idx = 0, ultimoFoco = null;
   const visibles = () => $$('.gitem').filter(i => !i.classList.contains('is-hidden'));
 
+  const cuenta = $('#lbCount');
+
   const mostrar = i => {
     idx = (i + lista.length) % lista.length;
     img.src = lista[idx].src;
     img.alt = lista[idx].alt;
     cap.textContent = lista[idx].cap;
+    if (cuenta) cuenta.textContent = `${idx + 1} / ${lista.length}`;
+
+    // adelantamos la siguiente y la anterior para que no parpadeen
+    [idx + 1, idx - 1].forEach(j => {
+      const v = lista[(j + lista.length) % lista.length];
+      if (v) new Image().src = v.src;
+    });
   };
 
   const abrir = desde => {
@@ -531,6 +658,15 @@ observarRevelados();
     if (e.key === 'Escape') cerrar();
     if (e.key === 'ArrowLeft') mostrar(idx - 1);
     if (e.key === 'ArrowRight') mostrar(idx + 1);
+
+    // El foco se queda dentro del visor mientras está abierto.
+    if (e.key === 'Tab') {
+      const focos = [$('#lbClose'), $('#lbPrev'), $('#lbNext')];
+      const i = focos.indexOf(document.activeElement);
+      const salto = e.shiftKey ? -1 : 1;
+      e.preventDefault();
+      focos[(i + salto + focos.length) % focos.length].focus();
+    }
   });
 
   let x0 = null;
@@ -651,7 +787,10 @@ $('#dateForm')?.addEventListener('submit', e => {
 
   if (!localStorage.getItem('rd_cookies')) setTimeout(abrir, 1400);
 
-  $('#ckAccept')?.addEventListener('click', () => cerrar('todas'));
+  $('#ckAccept')?.addEventListener('click', () => {
+    cerrar('todas');
+    cargarEmbedsInstagram();   // ya dio permiso, mostramos las publicaciones
+  });
   $('#ckReject')?.addEventListener('click', () => cerrar('necesarias'));
   $('#openCookies')?.addEventListener('click', abrir);
 })();
@@ -800,6 +939,25 @@ $('#dateForm')?.addEventListener('submit', e => {
     sincronizar();
     pintar();
   });
+})();
+
+/* ---------------------------------------------------------
+   AÑO
+--------------------------------------------------------- */
+/* ---------------------------------------------------------
+   VOLVER ARRIBA
+--------------------------------------------------------- */
+(() => {
+  const btn = $('#toTop');
+  if (!btn) return;
+  btn.hidden = false;
+
+  const revisar = () => btn.classList.toggle('is-on', scrollY > innerHeight * 0.9);
+  addEventListener('scroll', revisar, { passive: true });
+  revisar();
+
+  btn.addEventListener('click', () =>
+    scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }));
 })();
 
 /* ---------------------------------------------------------
