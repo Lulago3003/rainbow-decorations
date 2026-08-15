@@ -187,6 +187,9 @@ const ADMIN = {
           <label>Aviso importante <small>(usa **doble asterisco** para poner algo en negrita)</small>
             <textarea id="admAlqNota" rows="3" placeholder="El alquiler es solo con retiro...">${esc(datos.alquiler.nota)}</textarea>
           </label>
+          <label>Condiciones del alquiler <small>(una por línea · **doble asterisco** para negrita)</small>
+            <textarea id="admAlqCond" rows="7" placeholder="Los precios son **por día**.">${esc((datos.alquiler.condiciones || []).join('\n'))}</textarea>
+          </label>
           <div class="adm__list" id="admAlqLista"></div>
           <button class="btn btn--outline btn--sm" id="admAlqAgregar" type="button">+ Agregar artículo</button>
         </div>
@@ -421,6 +424,11 @@ const ADMIN = {
     liga('#admAlqWa',      'alquiler.whatsapp');
     liga('#admAlqWaVis',   'alquiler.whatsappVisible');
     liga('#admAlqNota',    'alquiler.nota');
+
+    $('#admAlqCond', panel)?.addEventListener('input', e => {
+      datos.alquiler.condiciones = e.target.value.split('\n').map(s => s.trim()).filter(Boolean);
+      previsualizar();
+    });
 
     $('#admAlqAgregar', panel)?.addEventListener('click', () => {
       datos.alquiler.articulos.push({

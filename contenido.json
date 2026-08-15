@@ -11,21 +11,21 @@
     "whatsapp": "50760249687",
     "whatsappVisible": "+507 6024-9687",
     "instagram": "rainbowdecorations01",
-    "horario": "Lunes a domingo · 8:00 a.m. a 8:00 p.m.",
+    "horario": "Escríbenos 24/7 por WhatsApp",
     "zona": "Arraiján y alrededores de Panamá Oeste",
-    "pagos": "Escríbenos por WhatsApp para coordinar la forma de pago y el abono de reserva."
+    "pagos": "Aceptamos Yappy y efectivo. El abono de reserva se coordina por WhatsApp."
   },
   "alquiler": {
     "whatsapp": "50769140677",
     "whatsappVisible": "+507 6914-0677",
-    "nota": "El alquiler de sillas y mesas es **solo con retiro**: tú pasas buscándolas por nuestro local en Arraiján y las devuelves al terminar tu actividad. El tiempo de alquiler y el depósito se acuerdan por WhatsApp al reservar.",
+    "nota": "El alquiler es **por día** y **solo con retiro**: pasas buscando las sillas y mesas por nuestro local en Arraiján y tienes **24 horas** desde que las retiras para devolverlas. Si las necesitas más tiempo, se cobra por día adicional.",
     "articulos": [
       {
         "nombre": "Silla plástica",
         "medida": "Apilable",
         "detalle": "Silla blanca de plástico, resistente, para interior y exterior.",
         "precio": "0.50",
-        "unidad": "por silla",
+        "unidad": "por silla, por día",
         "img": "assets/alquiler/silla.jpg",
         "foto": true,
         "capacidad": 1
@@ -35,7 +35,7 @@
         "medida": "73 × 73 cm",
         "detalle": "Mesa blanca de plástico. Cómoda para cuatro personas.",
         "precio": "2",
-        "unidad": "por mesa",
+        "unidad": "por mesa, por día",
         "img": "assets/alquiler/mesa-73.jpg",
         "foto": false,
         "capacidad": 4
@@ -45,7 +45,7 @@
         "medida": "120 × 60 cm",
         "detalle": "Mesa plegable con patas de metal. Ideal para buffet o mesa de regalos.",
         "precio": "5",
-        "unidad": "por mesa",
+        "unidad": "por mesa, por día",
         "img": "assets/alquiler/mesa-120.jpg",
         "foto": false,
         "capacidad": 6
@@ -55,11 +55,20 @@
         "medida": "180 × 75 cm",
         "detalle": "La más grande. Perfecta para comedor de invitados o mesa principal.",
         "precio": "7",
-        "unidad": "por mesa",
+        "unidad": "por mesa, por día",
         "img": "assets/alquiler/mesa-180.jpg",
         "foto": false,
         "capacidad": 8
       }
+    ],
+    "periodo": "por día",
+    "condiciones": [
+      "Los precios son **por día**.",
+      "Tienes **24 horas** desde que retiras para devolver. Si lo necesitas más días, se cobra por día adicional.",
+      "**Solo retiro** en nuestro local en Arraiján. No hacemos entrega a domicilio de sillas y mesas.",
+      "**Escríbenos siempre antes** para confirmar disponibilidad de las cantidades que necesitas.",
+      "Aceptamos **Yappy** y efectivo.",
+      "Las sillas y mesas se devuelven en las mismas condiciones en que se entregaron."
     ]
   },
   "instagram": {

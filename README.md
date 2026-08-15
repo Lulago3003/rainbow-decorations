@@ -156,25 +156,22 @@ GitHub Pages actualiza el sitio solo, en un minuto aproximadamente.
 
 ---
 
-## 5. Pendientes / cosas a confirmar con la dueña
+## 5. Datos del negocio ya confirmados
 
-- [ ] **Formas de pago.** El campo está en el panel pero con un texto genérico
-      ("Escríbenos por WhatsApp para coordinar el pago"). Si acepta Yappy, ACH o efectivo,
-      conviene ponerlo — vende mucho más.
-- [ ] **Política de reserva y cancelación.** `terminos.html` dice que se acuerda por WhatsApp
-      al reservar, porque no teníamos su política real. Si tiene una (abono del X%, cancelación
-      con N días), hay que escribirla ahí.
-- [ ] **Horario.** Está puesto "Lunes a domingo · 8:00 a.m. a 8:00 p.m." como referencia.
-      Confirmar el real y corregirlo desde el panel.
-- [ ] **Testimonios.** No se pusieron porque no había reseñas reales verificables. Si consigue
-      3 o 4 de clientes, valdría la pena agregar una sección.
-- [ ] **Precios de sillas y mesas — CONFIRMAR.** Se interpretó así del audio:
-      silla $0.50 · mesa plástica 73×73 cm $2 · mesa 120×60 cm $5 · mesa 180×75 cm $7.
-      Si alguno está mal, se corrige en un minuto desde el panel.
-- [ ] **Tiempo de alquiler y depósito.** La página dice que se acuerda por WhatsApp.
-      Si hay una tarifa por día o un depósito fijo, conviene ponerlo.
+- **Pagos:** Yappy y efectivo.
+- **Atención:** por WhatsApp 24/7. La hora de retiro se coordina en el chat.
+- **Alquiler de sillas y mesas:** los precios son **por día**. Desde el retiro hay
+  **24 horas** para devolver; más tiempo se cobra por día adicional. Solo retiro
+  en el local, sin entrega a domicilio.
+- **Existencias:** las cantidades son limitadas y **no se publican en la página** a
+  propósito. Siempre se confirma disponibilidad por WhatsApp.
 
----
+### Pendiente todavía
+
+- [ ] **Testimonios.** No se pusieron porque no hay reseñas reales verificables. Con
+      3 o 4 de clientes valdría la pena agregar una sección.
+- [ ] **Política de cancelación de decoraciones.** Los términos dicen que se acuerda
+      por WhatsApp al reservar. Si hay un % de abono fijo, conviene escribirlo.
 
 ## Notas
 

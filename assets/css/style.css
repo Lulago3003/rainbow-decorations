@@ -1307,3 +1307,27 @@ em.grad,.grad{
   background:rgba(255,255,255,.14);color:#fff;
   font-size:13px;font-weight:700;letter-spacing:.04em;
 }
+
+/* ============ CONDICIONES DEL ALQUILER ============ */
+.cond{
+  margin-top:18px;padding:clamp(24px,3vw,32px);border-radius:var(--r-xl);
+  background:var(--white);
+  box-shadow:inset 0 0 0 1px var(--line),0 18px 48px -34px rgba(32,18,47,.5);
+}
+.cond[hidden]{display:none}
+.cond h3{font-size:19px;letter-spacing:-.025em;margin-bottom:18px}
+.cond ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.cond li{
+  position:relative;padding-left:30px;
+  font-size:14.5px;color:var(--ink-2);line-height:1.6;
+}
+.cond li b{color:var(--ink)}
+.cond li::before{
+  content:"";position:absolute;left:0;top:5px;width:19px;height:19px;border-radius:50%;
+  background:var(--grad);opacity:.15;
+}
+.cond li::after{
+  content:"";position:absolute;left:5px;top:10px;width:9px;height:5px;
+  border-left:2px solid var(--magenta);border-bottom:2px solid var(--magenta);
+  transform:rotate(-45deg);border-radius:1px;
+}

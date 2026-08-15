@@ -93,6 +93,16 @@ function pintarAlquiler() {
     if (caja) caja.hidden = !a.nota;
   }
 
+  // **negrita** al estilo WhatsApp
+  const negrita = t => esc(t).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+
+  const cond = $('#rentCond');
+  if (cond) {
+    const lista = a.condiciones || [];
+    cond.hidden = !lista.length;
+    $('#rentCondList').innerHTML = lista.map(c => `<li>${negrita(c)}</li>`).join('');
+  }
+
   const rejilla = $('#rentGrid');
   if (!rejilla) return;
 
