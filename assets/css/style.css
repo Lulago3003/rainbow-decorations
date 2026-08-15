@@ -1064,7 +1064,8 @@ em.grad,.grad{
 .legal__box p{margin:0;font-size:14.5px}
 
 /* ============ PUENTE HACIA ALQUILER (en la portada) ============ */
-.bridge{padding:0 0 clamp(30px,5vw,60px)}
+/* Va justo debajo del hero, así que lleva aire arriba y abajo. */
+.bridge{padding:clamp(34px,5vw,64px) 0}
 .bridge__in{
   position:relative;overflow:hidden;
   display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:clamp(24px,4vw,50px);
