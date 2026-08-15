@@ -847,9 +847,25 @@ em.grad,.grad{
   background:linear-gradient(150deg,#FFF3F9,#F3F0FF 55%,#EAF6FF);
 }
 .igcard__fallback svg{color:var(--magenta)}
-.igcard__fallback b{font-size:15px;color:var(--ink)}
-.igcard__fallback span{font-size:13px;max-width:30ch}
-.igcard__fallback .btn{margin-top:4px}
+
+/* Con miniatura: la foto llena la tarjeta y el texto va encima. */
+.igcard__fallback--foto{padding:0;background:none}
+.igcard__mini{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.igcard:hover .igcard__mini{transform:scale(1.05)}
+.igcard__over{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;gap:11px;
+  padding:24px;text-align:center;
+}
+.igcard__fallback--foto .igcard__over{
+  position:absolute;inset:0;justify-content:flex-end;
+  /* bien oscuro abajo para que el título y el botón se lean sobre la foto */
+  background:linear-gradient(to top,rgba(16,6,26,.95) 26%,rgba(16,6,26,.75) 52%,rgba(16,6,26,.1) 88%);
+}
+.igcard__over b{font-size:15.5px;color:var(--ink);letter-spacing:-.02em}
+.igcard__fallback--foto .igcard__over b{color:#fff;font-size:17px}
+.igcard__over span{font-size:12px;max-width:32ch;color:var(--ink-3);line-height:1.45}
+.igcard__fallback--foto .igcard__over span{color:rgba(255,255,255,.72)}
 /* el iframe se inyecta al pedirlo y tapa el aviso */
 .igcard__frame iframe{z-index:1}
 .igcard__foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 18px}
@@ -1210,71 +1226,6 @@ em.grad,.grad{
 .rcall__tel svg{flex-shrink:0;color:#25D366}
 .rcall__note{margin-top:20px;font-size:13.5px;color:rgba(255,255,255,.75)}
 @media (max-width:520px){.rcall__tel{padding:15px 22px;gap:10px}}
-
-/* ============ COTIZADOR ============ */
-.calc{
-  padding:clamp(24px,3.4vw,36px);border-radius:var(--r-xl);
-  background:var(--white);
-  box-shadow:inset 0 0 0 1px var(--line),0 24px 64px -38px rgba(32,18,47,.5);
-}
-.calc__guests{padding-bottom:22px;margin-bottom:6px;border-bottom:1px solid var(--line)}
-.calc__guests label{display:block;font-size:13.5px;font-weight:700;margin-bottom:9px}
-.calc__guestsRow{display:flex;gap:10px;flex-wrap:wrap}
-.calc__guestsRow input{
-  flex:1;min-width:130px;font:inherit;font-size:15px;padding:13px 15px;
-  border-radius:var(--r-sm);border:1.5px solid var(--line);background:var(--cream);color:var(--ink);
-  transition:border-color .25s,box-shadow .25s,background .25s;
-}
-.calc__guestsRow input:focus{outline:0;border-color:var(--purple);background:var(--white);box-shadow:0 0 0 4px rgba(139,92,246,.13)}
-
-.calc__row{
-  display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:14px;
-  padding:15px 0;border-bottom:1px solid var(--line);
-  transition:opacity .3s;
-}
-.calc__row:not(.is-on){opacity:.62}
-.calc__info{display:flex;flex-direction:column;gap:2px;min-width:0}
-.calc__info b{font-size:15px;letter-spacing:-.02em}
-.calc__info span{font-size:12.5px;color:var(--ink-3)}
-.calc__stepper{display:flex;align-items:center;gap:4px}
-.calc__stepper button{
-  width:34px;height:34px;flex-shrink:0;border:0;border-radius:10px;cursor:pointer;
-  background:rgba(139,92,246,.1);color:var(--purple);
-  font-size:19px;line-height:1;font-weight:700;
-  transition:background .2s,transform .2s,color .2s;
-}
-.calc__stepper button:hover{background:var(--grad);color:#fff;transform:scale(1.06)}
-.calc__stepper input{
-  width:56px;text-align:center;font:inherit;font-weight:700;font-size:15px;
-  padding:8px 4px;border-radius:10px;border:1.5px solid var(--line);
-  background:var(--cream);color:var(--ink);-moz-appearance:textfield;
-}
-.calc__stepper input::-webkit-outer-spin-button,
-.calc__stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-.calc__stepper input:focus{outline:0;border-color:var(--purple);background:var(--white)}
-.calc__sub{
-  min-width:76px;text-align:right;font-family:"Bricolage Grotesque",sans-serif;
-  font-size:16px;letter-spacing:-.02em;
-}
-.calc__row.is-on .calc__sub{
-  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.calc__total{
-  display:flex;align-items:center;justify-content:space-between;gap:14px;
-  padding:20px 0 22px;
-}
-.calc__total span{font-size:14px;font-weight:600;color:var(--ink-2)}
-.calc__total b{
-  font-family:"Bricolage Grotesque",sans-serif;font-size:clamp(30px,4vw,40px);
-  font-weight:800;letter-spacing:-.04em;line-height:1;
-  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.calc__hint{margin:14px 0 0;font-size:12.5px;color:var(--ink-3);text-align:center;line-height:1.55}
-@media (max-width:560px){
-  .calc__row{grid-template-columns:1fr auto;row-gap:10px}
-  .calc__info{grid-column:1/-1}
-  .calc__sub{text-align:right}
-}
 
 /* ============ VOLVER ARRIBA ============ */
 .totop{

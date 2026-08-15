@@ -27,8 +27,7 @@
         "precio": "0.50",
         "unidad": "por silla, por día",
         "img": "assets/alquiler/silla.jpg",
-        "foto": true,
-        "capacidad": 1
+        "foto": true
       },
       {
         "nombre": "Mesa plástica cuadrada",
@@ -37,8 +36,7 @@
         "precio": "2",
         "unidad": "por mesa, por día",
         "img": "assets/alquiler/mesa-73.jpg",
-        "foto": false,
-        "capacidad": 4
+        "foto": false
       },
       {
         "nombre": "Mesa plegable rectangular",
@@ -47,8 +45,7 @@
         "precio": "5",
         "unidad": "por mesa, por día",
         "img": "assets/alquiler/mesa-120.jpg",
-        "foto": false,
-        "capacidad": 6
+        "foto": false
       },
       {
         "nombre": "Mesa plegable grande",
@@ -57,8 +54,7 @@
         "precio": "7",
         "unidad": "por mesa, por día",
         "img": "assets/alquiler/mesa-180.jpg",
-        "foto": false,
-        "capacidad": 8
+        "foto": false
       }
     ],
     "periodo": "por día",
@@ -77,15 +73,18 @@
     "publicaciones": [
       {
         "url": "https://www.instagram.com/p/DV_NFWRjqir/",
-        "titulo": "Montaje temática Bluey"
+        "titulo": "Montaje temática Bluey",
+        "miniatura": "assets/gallery/g03.jpg"
       },
       {
         "url": "https://www.instagram.com/p/DV8yfRDDonr/",
-        "titulo": "Catálogo de decoraciones"
+        "titulo": "Catálogo de decoraciones",
+        "miniatura": "assets/gallery/g01.jpg"
       },
       {
         "url": "https://www.instagram.com/p/DVmonvwDo0e/",
-        "titulo": "Baby shower Boy or Girl"
+        "titulo": "Baby shower Boy or Girl",
+        "miniatura": "assets/gallery/g04.jpg"
       }
     ]
   },

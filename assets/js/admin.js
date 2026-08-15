@@ -269,6 +269,9 @@ const ADMIN = {
         </label>
         <label>Título corto <small>(opcional)</small>
           <input type="text" data-ig="titulo" data-i="${i}" value="${esc(p.titulo)}" placeholder="Montaje temática Bluey">
+        </label>
+        <label>Foto de portada <small>(la que se ve antes de abrir la publicación; usa una de la galería)</small>
+          <input type="text" data-ig="miniatura" data-i="${i}" value="${esc(p.miniatura)}" placeholder="assets/gallery/g03.jpg">
         </label>`;
       $('.adm__del', item).addEventListener('click', () => {
         posts.splice(i, 1);
@@ -440,7 +443,7 @@ const ADMIN = {
     });
 
     $('#admIgAgregar', panel).addEventListener('click', () => {
-      datos.instagram.publicaciones.push({ url: '', titulo: '' });
+      datos.instagram.publicaciones.push({ url: '', titulo: '', miniatura: '' });
       pintarListaIg();
     });
 
