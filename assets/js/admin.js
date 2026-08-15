@@ -110,7 +110,9 @@ const ADMIN = {
     datos.contacto  ??= {};
     datos.instagram ??= {};
     datos.paquetes  ??= [];
+    datos.alquiler  ??= {};
     datos.instagram.publicaciones ??= [];
+    datos.alquiler.articulos      ??= [];
 
     const hayBorrador = !!borrador;
 
@@ -172,6 +174,24 @@ const ADMIN = {
         </div>
 
         <div class="adm__card">
+          <h2>Sillas y mesas</h2>
+          <p class="hint">Es la página de alquiler. Tiene su propio WhatsApp, distinto al de decoraciones.</p>
+          <div class="adm__row">
+            <label>WhatsApp de sillas y mesas <small>(sin + ni espacios)</small>
+              <input type="text" id="admAlqWa" value="${esc(datos.alquiler.whatsapp)}" placeholder="50769140677">
+            </label>
+            <label>Cómo se muestra ese número
+              <input type="text" id="admAlqWaVis" value="${esc(datos.alquiler.whatsappVisible)}" placeholder="+507 6914-0677">
+            </label>
+          </div>
+          <label>Aviso importante <small>(usa **doble asterisco** para poner algo en negrita)</small>
+            <textarea id="admAlqNota" rows="3" placeholder="El alquiler es solo con retiro...">${esc(datos.alquiler.nota)}</textarea>
+          </label>
+          <div class="adm__list" id="admAlqLista"></div>
+          <button class="btn btn--outline btn--sm" id="admAlqAgregar" type="button">+ Agregar artículo</button>
+        </div>
+
+        <div class="adm__card">
           <h2>Contacto y datos</h2>
           <div class="adm__row">
             <label>WhatsApp <small>(con código de país, sin + ni espacios)</small>
@@ -222,6 +242,7 @@ const ADMIN = {
 
     pintarListaIg();
     pintarListaPaquetes();
+    pintarListaAlquiler();
     enganchar();
     // Ojo: aquí NO llamamos previsualizar(). Guardaría un borrador nuevo
     // apenas se abre el panel y volvería a aparecer justo después de
@@ -319,6 +340,57 @@ const ADMIN = {
     }));
   }
 
+  function pintarListaAlquiler() {
+    const cont = $('#admAlqLista', panel);
+    if (!cont) return;
+    cont.innerHTML = '';
+
+    datos.alquiler.articulos.forEach((it, i) => {
+      const item = document.createElement('div');
+      item.className = 'adm__item';
+      item.innerHTML = `
+        <button class="adm__del" type="button" aria-label="Quitar artículo">&times;</button>
+        <div class="adm__row">
+          <label>Nombre
+            <input type="text" data-al="nombre" data-i="${i}" value="${esc(it.nombre)}">
+          </label>
+          <label>Medida <small>(ej. 120 × 60 cm)</small>
+            <input type="text" data-al="medida" data-i="${i}" value="${esc(it.medida)}">
+          </label>
+        </div>
+        <div class="adm__row">
+          <label>Precio <small>(solo el número, ej. 0.50)</small>
+            <input type="text" data-al="precio" data-i="${i}" value="${esc(it.precio)}">
+          </label>
+          <label>Unidad <small>(ej. por silla)</small>
+            <input type="text" data-al="unidad" data-i="${i}" value="${esc(it.unidad)}">
+          </label>
+        </div>
+        <label>Descripción
+          <input type="text" data-al="detalle" data-i="${i}" value="${esc(it.detalle)}">
+        </label>
+        <label>Ruta de la imagen <small>(súbela a assets/alquiler/ y pon la ruta aquí)</small>
+          <input type="text" data-al="img" data-i="${i}" value="${esc(it.img)}" placeholder="assets/alquiler/silla.jpg">
+        </label>
+        <label class="adm__switch">
+          <input type="checkbox" data-al="foto" data-i="${i}" ${it.foto ? 'checked' : ''}>
+          <span>Es una foto real (llena toda la tarjeta). Desmárcalo si la imagen tiene fondo blanco.</span>
+        </label>`;
+      $('.adm__del', item).addEventListener('click', () => {
+        datos.alquiler.articulos.splice(i, 1);
+        pintarListaAlquiler();
+        previsualizar();
+      });
+      cont.appendChild(item);
+    });
+
+    $$('[data-al]', cont).forEach(inp => inp.addEventListener('input', () => {
+      const it = datos.alquiler.articulos[+inp.dataset.i];
+      it[inp.dataset.al] = inp.type === 'checkbox' ? inp.checked : inp.value;
+      previsualizar();
+    }));
+  }
+
   /* ---------- eventos generales ---------- */
   function enganchar() {
     const liga = (id, ruta, esCheck = false) => {
@@ -346,6 +418,18 @@ const ADMIN = {
     liga('#admHorario',    'contacto.horario');
     liga('#admZona',       'contacto.zona');
     liga('#admPagos',      'contacto.pagos');
+    liga('#admAlqWa',      'alquiler.whatsapp');
+    liga('#admAlqWaVis',   'alquiler.whatsappVisible');
+    liga('#admAlqNota',    'alquiler.nota');
+
+    $('#admAlqAgregar', panel)?.addEventListener('click', () => {
+      datos.alquiler.articulos.push({
+        nombre: 'Artículo nuevo', medida: '', detalle: '',
+        precio: '0', unidad: 'por unidad', img: '', foto: false
+      });
+      pintarListaAlquiler();
+      previsualizar();
+    });
 
     $('#admIgAgregar', panel).addEventListener('click', () => {
       datos.instagram.publicaciones.push({ url: '', titulo: '' });

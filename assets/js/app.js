@@ -22,13 +22,22 @@ const POR_DEFECTO = {
     pagos: ''
   },
   instagram: { titulo: '', bajada: '', publicaciones: [] },
-  paquetes: []
+  paquetes: [],
+  alquiler: {
+    whatsapp: '50769140677',
+    whatsappVisible: '+507 6914-0677',
+    nota: '',
+    articulos: []
+  }
 };
 
 const RD = window.RD = { contenido: structuredClone(POR_DEFECTO) };
 
-const waURL = (texto) =>
-  `https://wa.me/${RD.contenido.contacto.whatsapp}?text=${encodeURIComponent(texto)}`;
+/* Hay dos números: el de decoraciones y el de alquiler de sillas y mesas. */
+const waURLcon = (numero, texto) =>
+  `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`;
+
+const waURL = (texto) => waURLcon(RD.contenido.contacto.whatsapp, texto);
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c =>
   ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -42,7 +51,8 @@ function aplicarContenido(data) {
     ...data,
     contacto: { ...POR_DEFECTO.contacto, ...(data.contacto || {}) },
     promo:    { ...POR_DEFECTO.promo,    ...(data.promo    || {}) },
-    instagram:{ ...POR_DEFECTO.instagram,...(data.instagram|| {}) }
+    instagram:{ ...POR_DEFECTO.instagram,...(data.instagram|| {}) },
+    alquiler: { ...POR_DEFECTO.alquiler, ...(data.alquiler || {}) }
   };
 
   pintarEnlacesWhatsapp();
@@ -50,15 +60,63 @@ function aplicarContenido(data) {
   pintarContacto();
   pintarInstagram();
   pintarPaquetes();
+  pintarAlquiler();
 }
 
-/* --- todos los enlaces de WhatsApp --- */
+/* --- todos los enlaces de WhatsApp ---
+   data-wa-tel="alquiler" manda al número de sillas y mesas. */
 function pintarEnlacesWhatsapp() {
+  const principal = RD.contenido.contacto.whatsapp;
+  const alquiler  = RD.contenido.alquiler.whatsapp || principal;
+
   $$('[data-wa]').forEach(el => {
-    el.setAttribute('href', waURL(el.dataset.wa));
+    const numero = el.dataset.waTel === 'alquiler' ? alquiler : principal;
+    el.setAttribute('href', waURLcon(numero, el.dataset.wa));
     el.setAttribute('target', '_blank');
     el.setAttribute('rel', 'noopener');
   });
+}
+
+/* --- catálogo de sillas y mesas --- */
+function pintarAlquiler() {
+  const a = RD.contenido.alquiler;
+
+  const tel = a.whatsappVisible || a.whatsapp;
+  const elTel = $('#rentTel');   if (elTel) elTel.textContent = tel;
+  const pieTel = $('#footTelAlq'); if (pieTel) pieTel.textContent = tel;
+
+  const nota = $('#rentNoteText');
+  if (nota) {
+    // **negrita** como en WhatsApp
+    nota.innerHTML = esc(a.nota).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+    const caja = $('#rentNote');
+    if (caja) caja.hidden = !a.nota;
+  }
+
+  const rejilla = $('#rentGrid');
+  if (!rejilla) return;
+
+  rejilla.innerHTML = (a.articulos || []).map((it, i) => {
+    const mensaje = `Hola! 👋 Quiero alquilar *${it.nombre}${it.medida ? ` (${it.medida})` : ''}*. ¿Cuántas tienen disponibles?`;
+    const [entero, centavos] = String(it.precio).split('.');
+    return `
+      <article class="rent__card${it.foto ? ' rent__card--foto' : ''} reveal" data-reveal ${i ? `data-delay="${Math.min(i, 5)}"` : ''}>
+        <div class="rent__img">
+          <img src="${esc(it.img)}" alt="${esc(it.nombre)}${it.medida ? ` de ${esc(it.medida)}` : ''}" loading="lazy">
+          <div class="rent__price"><span>$</span><b>${esc(entero)}${centavos ? `.${esc(centavos)}` : ''}</b></div>
+        </div>
+        <div class="rent__body">
+          <h3>${esc(it.nombre)}</h3>
+          ${it.medida ? `<span class="rent__med">${esc(it.medida)}</span>` : ''}
+          <p>${esc(it.detalle || '')}</p>
+          <span class="rent__unit">Precio ${esc(it.unidad || 'por unidad')}</span>
+          <a class="btn btn--wa-solid btn--sm" style="margin-top:16px" href="#" data-wa-tel="alquiler" data-wa="${esc(mensaje)}">Pedir por WhatsApp</a>
+        </div>
+      </article>`;
+  }).join('');
+
+  pintarEnlacesWhatsapp();
+  observarRevelados(rejilla);
 }
 
 /* --- barra de promoción --- */
@@ -747,4 +805,5 @@ $('#dateForm')?.addEventListener('submit', e => {
 /* ---------------------------------------------------------
    AÑO
 --------------------------------------------------------- */
-$('#year').textContent = new Date().getFullYear();
+const elAnio = $('#year');
+if (elAnio) elAnio.textContent = new Date().getFullYear();

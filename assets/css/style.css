@@ -1062,3 +1062,147 @@ em.grad,.grad{
   background:rgba(139,92,246,.07);box-shadow:inset 0 0 0 1px rgba(139,92,246,.16);
 }
 .legal__box p{margin:0;font-size:14.5px}
+
+/* ============ PUENTE HACIA ALQUILER (en la portada) ============ */
+.bridge{padding:0 0 clamp(30px,5vw,60px)}
+.bridge__in{
+  position:relative;overflow:hidden;
+  display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:clamp(24px,4vw,50px);
+  border-radius:var(--r-xl);
+  background:linear-gradient(125deg,#141024,#2A1740 55%,#123049);
+  color:#fff;
+  box-shadow:0 30px 70px -36px rgba(32,18,47,.75);
+}
+.bridge__copy{padding:clamp(30px,4vw,52px);position:relative;z-index:1}
+.bridge__tag{
+  display:inline-block;padding:6px 14px;border-radius:99px;margin-bottom:16px;
+  background:rgba(255,255,255,.12);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);
+  font-size:11.5px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;
+}
+.bridge__copy h2{font-size:clamp(27px,3.4vw,42px);letter-spacing:-.035em;color:#fff}
+.bridge__copy p{margin:14px 0 0;color:rgba(255,255,255,.76);font-size:15.5px;max-width:46ch}
+.bridge__from{
+  display:flex;align-items:baseline;gap:8px;margin:22px 0 0;
+  font-family:"Bricolage Grotesque",sans-serif;
+}
+.bridge__from small{font-size:13px;color:rgba(255,255,255,.6);font-weight:500;font-family:"Plus Jakarta Sans",sans-serif}
+.bridge__from b{
+  font-size:clamp(34px,4vw,46px);font-weight:800;letter-spacing:-.045em;line-height:1;
+  background:var(--grad-2);-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.bridge__btns{display:flex;flex-wrap:wrap;gap:11px;margin-top:26px}
+.bridge__pic{position:relative;align-self:stretch;min-height:280px}
+.bridge__pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bridge__pic::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,#1B1230 0%,rgba(27,18,48,.45) 32%,transparent 70%);
+}
+@media (max-width:860px){
+  .bridge__in{grid-template-columns:1fr}
+  .bridge__pic{min-height:220px;order:-1}
+  .bridge__pic::after{background:linear-gradient(to top,#1B1230 2%,rgba(27,18,48,.3) 60%,transparent)}
+}
+
+/* ============ PÁGINA DE ALQUILER ============ */
+.rhero{
+  position:relative;overflow:hidden;
+  padding:calc(122px + var(--promo-h,0px)) 0 clamp(50px,6vw,80px);
+  background:linear-gradient(170deg,var(--cream),#FFF1F6 55%,#EEF4FF);
+}
+.rhero__grid{
+  position:relative;z-index:1;
+  width:min(100% - (var(--pad) * 2),var(--wrap));margin-inline:auto;
+  display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4vw,56px);align-items:center;
+}
+@media (max-width:880px){.rhero__grid{grid-template-columns:1fr}}
+.rhero h1{font-size:clamp(36px,5.6vw,62px);letter-spacing:-.04em;margin-top:18px}
+.rhero__lead{margin:18px 0 0;color:var(--ink-2);font-size:clamp(15.5px,.5vw + 14.6px,18px);max-width:48ch}
+.rhero__btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.rhero__pic{
+  border-radius:var(--r-xl);overflow:hidden;aspect-ratio:4/3;
+  box-shadow:var(--shadow-lg);background:#fff;
+}
+.rhero__pic img{width:100%;height:100%;object-fit:cover}
+
+.rent{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:18px}
+.rent__card{
+  background:var(--white);border-radius:var(--r-xl);overflow:hidden;
+  box-shadow:inset 0 0 0 1px var(--line),0 18px 48px -32px rgba(32,18,47,.5);
+  display:flex;flex-direction:column;
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease);
+}
+.rent__card:hover{transform:translateY(-7px);box-shadow:0 34px 68px -32px rgba(32,18,47,.45)}
+.rent__img{
+  position:relative;aspect-ratio:4/3.2;background:#fff;
+  display:grid;place-items:center;padding:20px;
+  border-bottom:1px solid var(--line);
+}
+.rent__img img{width:100%;height:100%;object-fit:contain;transition:transform .6s var(--ease)}
+.rent__card:hover .rent__img img{transform:scale(1.06)}
+.rent__card--foto .rent__img{padding:0}
+.rent__card--foto .rent__img img{object-fit:cover}
+.rent__price{
+  position:absolute;top:14px;right:14px;
+  display:flex;align-items:baseline;gap:2px;
+  padding:8px 15px;border-radius:99px;
+  background:var(--grad);color:#fff;
+  font-family:"Bricolage Grotesque",sans-serif;font-weight:800;letter-spacing:-.02em;
+  box-shadow:0 12px 26px -12px rgba(230,49,138,.9);
+}
+.rent__price span{font-size:14px}
+.rent__price b{font-size:21px}
+.rent__body{padding:20px 22px 24px;display:flex;flex-direction:column;flex:1;gap:6px}
+.rent__body h3{font-size:19px;letter-spacing:-.025em}
+.rent__med{
+  display:inline-block;align-self:flex-start;padding:4px 11px;border-radius:99px;
+  background:rgba(139,92,246,.1);color:var(--purple);
+  font-size:12px;font-weight:700;letter-spacing:.02em;
+}
+.rent__body p{margin:4px 0 0;color:var(--ink-2);font-size:14px}
+.rent__unit{margin-top:auto;padding-top:14px;font-size:12.5px;color:var(--ink-3);font-weight:600}
+
+.rnote{
+  display:flex;align-items:flex-start;gap:15px;margin-top:26px;
+  padding:20px 24px;border-radius:var(--r);
+  background:rgba(251,191,36,.1);box-shadow:inset 0 0 0 1px rgba(251,191,36,.32);
+}
+.rnote svg{flex-shrink:0;color:#B45309;margin-top:2px}
+.rnote p{margin:0;font-size:14.5px;color:var(--ink-2);line-height:1.6}
+.rnote b{color:var(--ink)}
+
+.rsteps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.rstep{
+  padding:26px 24px;border-radius:var(--r-lg);background:var(--white);
+  box-shadow:inset 0 0 0 1px var(--line),0 14px 40px -30px rgba(32,18,47,.5);
+}
+.rstep b{
+  display:grid;place-items:center;width:38px;height:38px;border-radius:12px;margin-bottom:16px;
+  background:var(--grad);color:#fff;font-family:"Bricolage Grotesque",sans-serif;font-size:16px;
+}
+.rstep h3{font-size:17.5px;letter-spacing:-.02em;margin-bottom:7px}
+.rstep p{margin:0;font-size:14.5px;color:var(--ink-2)}
+
+/* llamada final con el teléfono bien grande */
+.rcall{position:relative;overflow:hidden;padding:clamp(60px,8vw,100px) 0;background:#0F7A3D;text-align:center}
+.rcall::before{
+  content:"";position:absolute;inset:-30%;
+  background:radial-gradient(circle at 30% 40%,rgba(37,211,102,.85),transparent 60%),
+             radial-gradient(circle at 72% 60%,rgba(18,140,70,.9),transparent 62%);
+  filter:blur(60px);
+}
+.rcall__in{position:relative;z-index:1}
+.rcall h2{color:#fff;font-size:clamp(28px,4vw,46px);letter-spacing:-.035em}
+.rcall p{margin:14px auto 0;max-width:48ch;color:rgba(255,255,255,.85);font-size:16px}
+.rcall__tel{
+  display:inline-flex;align-items:center;gap:14px;margin-top:30px;
+  padding:18px 30px;border-radius:99px;text-decoration:none;
+  background:#fff;color:#0B5D2E;
+  font-family:"Bricolage Grotesque",sans-serif;font-weight:800;letter-spacing:-.03em;
+  font-size:clamp(24px,3.6vw,38px);
+  box-shadow:0 24px 50px -20px rgba(0,0,0,.5);
+  transition:transform .35s var(--ease),box-shadow .35s;
+}
+.rcall__tel:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 32px 60px -20px rgba(0,0,0,.6)}
+.rcall__tel svg{flex-shrink:0;color:#25D366}
+.rcall__note{margin-top:20px;font-size:13.5px;color:rgba(255,255,255,.75)}
+@media (max-width:520px){.rcall__tel{padding:15px 22px;gap:10px}}

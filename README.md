@@ -9,15 +9,27 @@ Se publica gratis en GitHub Pages.
 **En vivo:** https://lulago3003.github.io/rainbow-decorations/
 
 ```
-index.html            → la página principal
+index.html            → la página principal (decoraciones)
+alquiler.html         → alquiler de sillas y mesas (WhatsApp aparte)
 privacidad.html       → política de privacidad y cookies
 terminos.html         → términos y condiciones
 contenido.json        → el contenido que se edita desde el panel
 assets/css/style.css  → estilos
 assets/js/app.js      → interacciones de la página
 assets/js/admin.js    → panel de administración
-assets/gallery/       → las fotos
+assets/gallery/       → fotos de decoraciones
+assets/alquiler/      → fotos de sillas y mesas
 ```
+
+## Ojo: hay DOS números de WhatsApp
+
+| Página | Para qué | Número |
+|---|---|---|
+| `index.html` | Decoraciones, bouquets, regalos, mobiliario decorativo | **+507 6024-9687** |
+| `alquiler.html` | Solo sillas y mesas para invitados | **+507 6914-0677** |
+
+En el HTML, cualquier enlace con `data-wa-tel="alquiler"` va al segundo número.
+Sin ese atributo, va al de decoraciones. Ambos se editan desde el panel.
 
 ---
 
@@ -40,6 +52,7 @@ https://lulago3003.github.io/rainbow-decorations/#admin
 | Promoción de arriba | La barra de colores del tope: encenderla/apagarla, texto, etiqueta, botón y el mensaje que se escribe en WhatsApp |
 | Publicaciones de Instagram | Pega el enlace de una publicación y aparece en la página. Se pueden agregar, quitar y reordenar |
 | Paquetes y precios | Nombre, precio, para quién es, qué incluye, y cuál sale marcado como "Más pedido" |
+| Sillas y mesas | Precios, medidas, descripciones, el aviso de retiro y el WhatsApp de esa página |
 | Contacto y datos | WhatsApp, Instagram, horario, zona de cobertura y formas de pago |
 
 Los cambios **se ven al instante** en la página mientras edita (queda guardado como borrador
@@ -155,6 +168,11 @@ GitHub Pages actualiza el sitio solo, en un minuto aproximadamente.
       Confirmar el real y corregirlo desde el panel.
 - [ ] **Testimonios.** No se pusieron porque no había reseñas reales verificables. Si consigue
       3 o 4 de clientes, valdría la pena agregar una sección.
+- [ ] **Precios de sillas y mesas — CONFIRMAR.** Se interpretó así del audio:
+      silla $0.50 · mesa plástica 73×73 cm $2 · mesa 120×60 cm $5 · mesa 180×75 cm $7.
+      Si alguno está mal, se corrige en un minuto desde el panel.
+- [ ] **Tiempo de alquiler y depósito.** La página dice que se acuerda por WhatsApp.
+      Si hay una tarifa por día o un depósito fijo, conviene ponerlo.
 
 ---
 

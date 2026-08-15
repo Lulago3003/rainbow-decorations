@@ -18,6 +18,50 @@
     "pagos": "Escríbenos por WhatsApp para coordinar la forma de pago y el abono de reserva."
   },
 
+  "alquiler": {
+    "whatsapp": "50769140677",
+    "whatsappVisible": "+507 6914-0677",
+    "nota": "El alquiler de sillas y mesas es **solo con retiro**: tú pasas buscándolas por nuestro local en Arraiján y las devuelves al terminar tu actividad. El tiempo de alquiler y el depósito se acuerdan por WhatsApp al reservar.",
+    "articulos": [
+      {
+        "nombre": "Silla plástica",
+        "medida": "Apilable",
+        "detalle": "Silla blanca de plástico, resistente, para interior y exterior.",
+        "precio": "0.50",
+        "unidad": "por silla",
+        "img": "assets/alquiler/silla.jpg",
+        "foto": true
+      },
+      {
+        "nombre": "Mesa plástica cuadrada",
+        "medida": "73 × 73 cm",
+        "detalle": "Mesa blanca de plástico. Cómoda para cuatro personas.",
+        "precio": "2",
+        "unidad": "por mesa",
+        "img": "assets/alquiler/mesa-73.jpg",
+        "foto": false
+      },
+      {
+        "nombre": "Mesa plegable rectangular",
+        "medida": "120 × 60 cm",
+        "detalle": "Mesa plegable con patas de metal. Ideal para buffet o mesa de regalos.",
+        "precio": "5",
+        "unidad": "por mesa",
+        "img": "assets/alquiler/mesa-120.jpg",
+        "foto": false
+      },
+      {
+        "nombre": "Mesa plegable grande",
+        "medida": "180 × 75 cm",
+        "detalle": "La más grande. Perfecta para comedor de invitados o mesa principal.",
+        "precio": "7",
+        "unidad": "por mesa",
+        "img": "assets/alquiler/mesa-180.jpg",
+        "foto": false
+      }
+    ]
+  },
+
   "instagram": {
     "titulo": "Lo último de nuestro Instagram",
     "bajada": "Publicaciones recién salidas del horno. Toca cualquiera para verla completa.",
@@ -60,8 +104,8 @@
       ]
     },
     {
-      "nombre": "Alquiler de mobiliario",
-      "para": "Si ya tienes tu decoración",
+      "nombre": "Mobiliario decorativo",
+      "para": "Aros y marcos para tu montaje",
       "precio": "18",
       "desde": true,
       "destacado": false,
